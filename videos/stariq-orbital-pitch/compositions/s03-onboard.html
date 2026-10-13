@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .s03 {
+          position: absolute;
+          inset: 0;
+        }
+        .s03-bgwrap {
+          position: absolute;
+          inset: 0;
+        }
+        .s03-bgwrap video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .s03-shade {
+          background: linear-gradient(90deg, rgba(2, 6, 16, 0.82) 0%, rgba(2, 6, 16, 0.55) 34%, rgba(2, 6, 16, 0) 58%);
+        }
+        .s03-svg {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+        }
+        .s03-reticle {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 230px;
+          height: 230px;
+          margin: -115px 0 0 -115px;
+        }
+        .s03-reticle i {
+          position: absolute;
+          width: 34px;
+          height: 34px;
+          border: 0 solid #5fd8ff;
+        }
+        .s03-reticle i:nth-child(1) {
+          left: 0;
+          top: 0;
+          border-left-width: 3px;
+          border-top-width: 3px;
+        }
+        .s03-reticle i:nth-child(2) {
+          right: 0;
+          top: 0;
+          border-right-width: 3px;
+          border-top-width: 3px;
+        }
+        .s03-reticle i:nth-child(3) {
+          left: 0;
+          bottom: 0;
+          border-left-width: 3px;
+          border-bottom-width: 3px;
+        }
+        .s03-reticle i:nth-child(4) {
+          right: 0;
+          bottom: 0;
+          border-right-width: 3px;
+          border-bottom-width: 3px;
+        }
+        .s03-tag {
+          position: absolute;
+          left: 250px;
+          top: 6px;
+          white-space: nowrap;
+          font-family: "JetBrains Mono", monospace;
+          font-size: 19px;
+          letter-spacing: 0.14em;
+          color: #eef4ff;
+          line-height: 1.6;
+        }
+        .s03-tag b {
+          color: #22c7ae;
+        }
+        .s03-copy {
+          position: absolute;
+          left: 120px;
+          top: 250px;
+          width: 800px;
+          display: flex;
+          flex-direction: column;
+          gap: 26px;
+        }
+        .s03-copy .headline {
+          font-size: 92px;
+        }
+        .s03-rows {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+          margin-top: 12px;
+        }
+        .s03-row {
+          display: flex;
+          align-items: center;
+          gap: 22px;
+          padding: 20px 26px;
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 36px;
+          letter-spacing: 0.02em;
+          color: #eef4ff;
+          position: relative;
+        }
+        .s03-ico {
+          width: 46px;
+          height: 46px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "JetBrains Mono", monospace;
+          font-size: 26px;
+          font-weight: 700;
+          flex: 0 0 46px;
+        }
+        .s03-ico.ok {
+          background: rgba(34, 199, 174, 0.18);
+          color: #22c7ae;
+          border: 2px solid #22c7ae;
+        }
+        .s03-ico.no {
+          background: rgba(243, 172, 61, 0.14);
+          color: #f3ac3d;
+          border: 2px solid #f3ac3d;
+        }
+        .s03-ico.go {
+          background: rgba(74, 134, 255, 0.18);
+          color: #4a86ff;
+          border: 2px solid #4a86ff;
+        }
+        .s03-strike {
+          position: absolute;
+          left: 92px;
+          right: 26px;
+          top: 50%;
+          height: 4px;
+          background: #f3ac3d;
+          transform-origin: 0 50%;
+        }
+        .s03-dim {
+          color: #8ea2c2;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s03-onboard" data-width="1920" data-height="1080">
+        <div class="s03">
+          <div class="s03-bgwrap" id="s03-bgwrap">
+            <video id="s03-bg" src="assets/broll/orbital.mp4" muted playsinline data-start="0" data-duration="7.3" data-media-start="13" data-track-index="0"></video>
+          </div>
+          <div class="scene-shade s03-shade"></div>
+
+          <svg class="s03-svg" viewBox="0 0 1920 1080">
+            <defs>
+              <linearGradient id="s03-beam-g" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#5fd8ff" stop-opacity="0.95" />
+                <stop offset="1" stop-color="#5fd8ff" stop-opacity="0.1" />
+              </linearGradient>
+            </defs>
+            <line id="s03-beam" x1="1200" y1="300" x2="760" y2="1010" stroke="#5fd8ff" stroke-width="3" stroke-dasharray="10 12" opacity="0" />
+            <circle id="s03-packet" cx="1200" cy="300" r="10" fill="#eef4ff" opacity="0" />
+            <circle id="s03-packet-glow" cx="1200" cy="300" r="26" fill="#5fd8ff" opacity="0" />
+          </svg>
+
+          <div class="s03-reticle" id="s03-reticle">
+            <i></i><i></i><i></i><i></i>
+            <div class="s03-tag" id="s03-tag">EARTH-OBSERVATION SATELLITE<br />AI ONBOARD <b>● ACTIVE</b></div>
+          </div>
+
+          <div class="s03-copy" id="s03-copy">
+            <div class="kicker" id="s03-kicker" data-text="ONBOARD AI">ONBOARD AI</div>
+            <h1 class="headline" id="s03-h">AI on board.</h1>
+            <div class="s03-rows">
+              <div class="s03-row panel" id="s03-r1"><span class="s03-ico ok">✓</span>Sends answers</div>
+              <div class="s03-row panel" id="s03-r2"><span class="s03-ico no">✕</span><span class="s03-dim">Not raw data</span><span class="s03-strike" id="s03-strike"></span></div>
+              <div class="s03-row panel" id="s03-r3"><span class="s03-ico go">↻</span>Reacts without waiting for Earth</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 13.0;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          tl.fromTo("#s03-bgwrap", { scale: 1.0 }, { scale: 1.04, duration: 7.3, ease: "none" }, 0);
+
+          // Track the satellite bus across the flyby (screen path measured from the b-roll render).
+          const ret = q("#s03-reticle");
+          const beam = q("#s03-beam");
+          const pk = q("#s03-packet");
+          const pkg = q("#s03-packet-glow");
+          const easeIO = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+          const drv = { t: 0, beam: 0 };
+          const satAt = (t) => {
+            const u = t / 10;
+            return [1227 - 810 * easeIO(u), 296 + 80 * u];
+          };
+          const render = () => {
+            const [x, y] = satAt(drv.t);
+            ret.style.transform = `translate(${x}px, ${y}px)`;
+            beam.setAttribute("x1", x);
+            beam.setAttribute("y1", y + 40);
+            const b = drv.beam;
+            const px = x + (760 - x) * b;
+            const py = y + 40 + (1010 - y - 40) * b;
+            pk.setAttribute("cx", px);
+            pk.setAttribute("cy", py);
+            pkg.setAttribute("cx", px);
+            pkg.setAttribute("cy", py);
+          };
+          render();
+          tl.fromTo(drv, { t: 0 }, { t: 7.3, duration: 7.3, ease: "none", onUpdate: render }, 0);
+          tl.fromTo(ret, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.55);
+          tl.fromTo("#s03-reticle i", { scale: 1.6 }, { scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.55);
+          tl.fromTo("#s03-tag", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 0.8);
+
+          // copy, locked to "With AI on board, / a satellite sends answers, / not raw data, / and reacts without waiting for Earth."
+          SQ.scramble(tl, q("#s03-kicker"), 0.4, 0.6, 31);
+          const wh = SQ.splitWords(q("#s03-h"));
+          tl.fromTo(wh, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.1 }, at("vo04", 0) - 0.05);
+          tl.fromTo("#s03-r1", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, at("vo04", 1) + 0.35);
+          tl.fromTo("#s03-r2", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, at("vo04", 2) - 0.05);
+          tl.fromTo("#s03-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power2.inOut" }, at("vo04", 2) + 0.45);
+          tl.fromTo("#s03-r3", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, at("vo04", 3));
+
+          // the answer leaves the satellite as one small packet, beamed to the ground
+          tl.fromTo(beam, { opacity: 0 }, { opacity: 0.85, duration: 0.3 }, at("vo04", 1) + 0.2);
+          tl.fromTo([pk, pkg], { opacity: 0 }, { opacity: 1, duration: 0.2 }, at("vo04", 1) + 0.3);
+          tl.fromTo(drv, { beam: 0 }, { beam: 1, duration: 1.5, ease: "power1.in", onUpdate: render }, at("vo04", 1) + 0.3);
+          tl.to([pk, pkg], { opacity: 0, duration: 0.25 }, at("vo04", 1) + 1.8);
+          tl.fromTo(pkg, { scale: 1 }, { scale: 1.8, transformOrigin: "50% 50%", duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, at("vo04", 1) + 0.3);
+          tl.to(beam, { opacity: 0.25, duration: 0.6 }, at("vo04", 1) + 2.0);
+
+          // exit: hard glitch into the problem
+          tl.to("#s03-copy", { opacity: 0, x: -40, duration: 0.25, ease: "power2.in" }, 7.05);
+
+          window.__timelines["s03-onboard"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

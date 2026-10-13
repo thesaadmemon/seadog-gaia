@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #040a17;
+        }
+        .s04 {
+          position: absolute;
+          inset: 0;
+        }
+        .s04-bgwrap {
+          position: absolute;
+          inset: 0;
+        }
+        .s04-bgwrap video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .s04-shadeA {
+          background: linear-gradient(90deg, rgba(10, 4, 4, 0.78) 0%, rgba(10, 4, 4, 0.3) 45%, rgba(0, 0, 0, 0) 70%);
+        }
+        .s04-rays {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .s04-ray {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 420px;
+          height: 3px;
+          border-radius: 2px;
+          background: linear-gradient(90deg, rgba(255, 220, 160, 0), rgba(255, 210, 140, 0.9) 80%, #ffffff);
+          box-shadow: 0 0 14px rgba(255, 180, 90, 0.9);
+          transform-origin: 100% 50%;
+          opacity: 0;
+        }
+        .s04-alert {
+          position: absolute;
+          right: 120px;
+          top: 150px;
+          padding: 22px 28px;
+          border: 2px solid rgba(255, 93, 85, 0.7);
+          background: rgba(40, 6, 6, 0.6);
+          font-family: "JetBrains Mono", monospace;
+          color: #ffb3ae;
+          font-size: 20px;
+          letter-spacing: 0.16em;
+          line-height: 1.7;
+        }
+        .s04-alert b {
+          color: #ff5d55;
+          font-size: 24px;
+        }
+        .s04-hA {
+          position: absolute;
+          left: 120px;
+          top: 380px;
+          width: 900px;
+          font-size: 100px;
+        }
+        /* chip lab */
+        .s04-lab {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          background: radial-gradient(ellipse at 62% 52%, #0d2250 0%, #06112a 45%, #030814 100%);
+        }
+        .s04-grid {
+          position: absolute;
+          inset: -60px;
+          background-image: linear-gradient(rgba(95, 160, 255, 0.09) 2px, transparent 2px), linear-gradient(90deg, rgba(95, 160, 255, 0.09) 2px, transparent 2px);
+          background-size: 80px 80px;
+        }
+        .s04-chipwrap {
+          position: absolute;
+          left: 760px;
+          top: 250px;
+          width: 1080px;
+          height: 698px;
+          perspective: 1600px;
+        }
+        .s04-chip {
+          position: absolute;
+          inset: 0;
+        }
+        .s04-chip img {
+          width: 100%;
+          height: 100%;
+          display: block;
+          filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.6));
+        }
+        .s04-hit {
+          position: absolute;
+          left: 787px;
+          top: 262px;
+          width: 0;
+          height: 0;
+        }
+        .s04-flash {
+          position: absolute;
+          left: -120px;
+          top: -120px;
+          width: 240px;
+          height: 240px;
+          border-radius: 50%;
+          background: radial-gradient(circle, #ffffff 0%, rgba(255, 190, 90, 0.9) 22%, rgba(255, 140, 40, 0) 70%);
+          opacity: 0;
+        }
+        .s04-ring {
+          position: absolute;
+          left: -60px;
+          top: -60px;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          border: 3px solid #f3ac3d;
+          opacity: 0;
+        }
+        .s04-boltwrap {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 0;
+          height: 0;
+        }
+        .s04-bolt {
+          position: absolute;
+          left: -560px;
+          top: -2px;
+          width: 560px;
+          height: 4px;
+          background: linear-gradient(90deg, rgba(255, 220, 160, 0), #ffd28a 75%, #fff);
+          box-shadow: 0 0 18px rgba(255, 170, 70, 1);
+          transform-origin: 0% 50%;
+          opacity: 0;
+        }
+        .s04-hB {
+          position: absolute;
+          left: 120px;
+          top: 170px;
+          width: 1300px;
+          font-size: 68px;
+        }
+        .s04-bits {
+          position: absolute;
+          left: 120px;
+          top: 520px;
+          width: 600px;
+          padding: 28px 30px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .s04-bitrow {
+          display: flex;
+          gap: 12px;
+        }
+        .s04-bit {
+          width: 56px;
+          height: 72px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 40px;
+          color: #eef4ff;
+          background: rgba(74, 134, 255, 0.12);
+          border: 2px solid rgba(74, 134, 255, 0.5);
+        }
+        .s04-bit.flip {
+          position: relative;
+        }
+        .s04-bit .v1 {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #040a17;
+          background: #f3ac3d;
+          opacity: 0;
+        }
+        .s04-seu {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0.2em;
+          color: #f3ac3d;
+          opacity: 0;
+        }
+        /* crash */
+        .s04-term {
+          position: absolute;
+          left: 120px;
+          top: 360px;
+          width: 1180px;
+          padding: 30px 36px;
+          background: rgba(4, 6, 12, 0.94);
+          border: 2px solid rgba(255, 93, 85, 0.65);
+          font-family: "JetBrains Mono", monospace;
+          font-size: 25px;
+          line-height: 1.7;
+          color: #c9d6ea;
+          opacity: 0;
+        }
+        .s04-term .red {
+          color: #ff5d55;
+          font-weight: 700;
+        }
+        .s04-tl {
+          display: block;
+          opacity: 0;
+          white-space: nowrap;
+        }
+        .s04-hC {
+          position: absolute;
+          left: 120px;
+          top: 180px;
+          font-size: 120px;
+          color: #ff5d55;
+          opacity: 0;
+        }
+        /* silent corruption */
+        .s04-dash {
+          position: absolute;
+          left: 120px;
+          top: 360px;
+          width: 1680px;
+          height: 420px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 30px;
+          opacity: 0;
+        }
+        .s04-card {
+          padding: 34px 38px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          position: relative;
+          overflow: hidden;
+        }
+        .s04-card .lbl {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 21px;
+          letter-spacing: 0.24em;
+          color: #a9bddc;
+        }
+        .s04-card .big {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 64px;
+          color: #22c7ae;
+        }
+        .s04-card .res {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 40px;
+          color: #eef4ff;
+        }
+        .s04-card .conf {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 24px;
+          color: #a9bddc;
+        }
+        .s04-ekg {
+          width: 100%;
+          height: 120px;
+        }
+        .s04-stamp {
+          position: absolute;
+          right: 34px;
+          bottom: 30px;
+          padding: 12px 20px;
+          border: 4px solid #f3ac3d;
+          color: #f3ac3d;
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 28px;
+          letter-spacing: 0.16em;
+          transform: rotate(-6deg);
+          opacity: 0;
+        }
+        .s04-hD {
+          position: absolute;
+          left: 120px;
+          top: 170px;
+          font-size: 112px;
+          opacity: 0;
+        }
+        .s04-hD .gold {
+          text-shadow: 0 0 40px rgba(243, 172, 61, 0.55);
+        }
+      </style>
+
+      <div id="root" data-composition-id="s04-problem" data-width="1920" data-height="1080">
+        <div class="s04" id="s04-shake">
+          <!-- A · the environment -->
+          <div class="s04-bgwrap" id="s04-bgwrap">
+            <video id="s04-bg" src="assets/broll/orbital.mp4" muted playsinline data-start="0" data-duration="2.9" data-media-start="23" data-track-index="0"></video>
+          </div>
+          <div class="scene-shade s04-shadeA" id="s04-shadeA"></div>
+          <div class="s04-rays" id="s04-rays"></div>
+          <div class="s04-alert" id="s04-alert"><b>▲ RADIATION ENVIRONMENT</b><br />HIGH-ENERGY PARTICLES · PROTONS · HEAVY IONS</div>
+          <h1 class="headline s04-hA" id="s04-hA">Space is hostile to computers.</h1>
+
+          <!-- B · one particle, one bit -->
+          <div class="s04-lab" id="s04-lab">
+            <div class="s04-grid" id="s04-grid"></div>
+            <div class="s04-chipwrap">
+              <div class="s04-chip" id="s04-chip">
+                <img src="assets/img/chip-ai-concept.png" alt="AI processor concept with a radiation strike" />
+                <div class="s04-hit" id="s04-hit">
+                  <div class="s04-boltwrap" id="s04-boltwrap"><div class="s04-bolt" id="s04-bolt"></div></div>
+                  <div class="s04-ring" id="s04-ring1"></div>
+                  <div class="s04-ring" id="s04-ring2"></div>
+                  <div class="s04-flash" id="s04-flash"></div>
+                </div>
+              </div>
+            </div>
+            <h2 class="headline s04-hB" id="s04-hB">One particle can change data inside an <span class="accent">AI chip.</span></h2>
+            <div class="s04-bits panel" id="s04-bits">
+              <div class="kicker" id="s04-bk" data-text="MEMORY WORD · 0x3F2A">MEMORY WORD · 0x3F2A</div>
+              <div class="s04-bitrow">
+                <div class="s04-bit">0</div>
+                <div class="s04-bit">1</div>
+                <div class="s04-bit">0</div>
+                <div class="s04-bit flip">0<span class="v1" id="s04-v1">1</span></div>
+                <div class="s04-bit">1</div>
+                <div class="s04-bit">1</div>
+                <div class="s04-bit">0</div>
+                <div class="s04-bit">1</div>
+              </div>
+              <div class="s04-seu" id="s04-seu">▲ SINGLE-EVENT UPSET · BIT FLIPPED</div>
+            </div>
+          </div>
+
+          <!-- C · the crash -->
+          <h2 class="headline s04-hC" id="s04-hC">Linux can crash.</h2>
+          <div class="s04-term" id="s04-term">
+            <span class="s04-tl">[ 5321.004417] Unable to handle kernel paging request at 0xffff8000</span>
+            <span class="s04-tl">[ 5321.004902] Internal error: Oops: 96000004 [#1] SMP</span>
+            <span class="s04-tl">[ 5321.005518] Call trace: ai_runtime_step+0x1c4/0x2b0</span>
+            <span class="s04-tl red">[ 5321.006134] Kernel panic - not syncing: Fatal exception</span>
+            <span class="s04-tl red">---[ end Kernel panic - not syncing ]---</span>
+          </div>
+
+          <!-- D · silently wrong -->
+          <h2 class="headline s04-hD" id="s04-hD">The worst case: <span class="gold">silently wrong.</span></h2>
+          <div class="s04-dash" id="s04-dash">
+            <div class="s04-card panel">
+              <div class="lbl">SYSTEM HEALTH</div>
+              <div class="big">● NOMINAL</div>
+              <svg class="s04-ekg" viewBox="0 0 760 120" preserveAspectRatio="none">
+                <path id="s04-ekg" d="M0 60 L120 60 L140 20 L160 100 L180 60 L300 60 L320 20 L340 100 L360 60 L480 60 L500 20 L520 100 L540 60 L660 60 L680 20 L700 100 L720 60 L760 60" fill="none" stroke="#22c7ae" stroke-width="4" />
+              </svg>
+            </div>
+            <div class="s04-card panel" id="s04-out">
+              <div class="lbl">AI RESULT · SCENE 0417</div>
+              <div class="res" id="s04-res">"NO ANOMALY DETECTED"</div>
+              <div class="conf">confidence 0.98 · sent to ground</div>
+              <div class="s04-stamp" id="s04-stamp">✕ CORRUPTED · UNDETECTED</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 20.3;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          // ---- A: cosmic-ray streaks over the back-lit satellite ----
+          tl.fromTo("#s04-bgwrap", { scale: 1.06 }, { scale: 1.0, duration: 2.9, ease: "power1.out" }, 0);
+          const rays = q("#s04-rays");
+          const N = 16;
+          for (let i = 0; i < N; i++) {
+            const r = document.createElement("div");
+            r.className = "s04-ray";
+            rays.appendChild(r);
+            const ang = -32 + (SQ.hash(i * 17 + 3) - 0.5) * 14;
+            const len = 260 + SQ.hash(i * 7 + 1) * 320;
+            const y0 = -120 + SQ.hash(i * 13 + 5) * 760;
+            const x0 = 300 + SQ.hash(i * 29 + 9) * 1700;
+            const rad = (ang * Math.PI) / 180;
+            const dist = 1500;
+            const t0 = 0.05 + (i / N) * 2.3 + SQ.hash(i * 3 + 2) * 0.2;
+            r.style.width = len + "px";
+            tl.fromTo(
+              r,
+              { x: x0, y: y0, rotation: 180 + ang, opacity: 0 },
+              { x: x0 - Math.cos(rad) * dist, y: y0 - Math.sin(rad) * dist, opacity: 1, duration: 0.55, ease: "none" },
+              t0,
+            );
+            tl.to(r, { opacity: 0, duration: 0.12 }, t0 + 0.45);
+          }
+          tl.fromTo("#s04-alert", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 0.15);
+          tl.to("#s04-alert", { opacity: 0.55, duration: 0.18, repeat: 5, yoyo: true, ease: "none" }, 0.6);
+          const wA = SQ.splitWords(q("#s04-hA"));
+          tl.fromTo(wA, { opacity: 0, y: 40, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out", stagger: 0.09 }, at("vo05a", 0) - 0.05);
+          tl.to(["#s04-hA", "#s04-alert"], { opacity: 0, duration: 0.3, ease: "power2.in" }, at("vo05b", 0) - 0.35);
+
+          // ---- B: the chip, a strike, a flipped bit ----
+          const tB = at("vo05b", 0) - 0.3;
+          tl.fromTo("#s04-lab", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, tB);
+          tl.fromTo("#s04-grid", { x: 0, y: 0 }, { x: -80, y: -40, duration: 6, ease: "none" }, tB);
+          tl.fromTo("#s04-chip", { rotationX: 22, rotationY: -16, scale: 0.92, y: 40 }, { rotationX: 14, rotationY: -6, scale: 1, y: 0, duration: 4.4, ease: "power2.out" }, tB);
+          const wB = SQ.splitWords(q("#s04-hB"));
+          tl.fromTo(wB, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", stagger: 0.07 }, tB + 0.25);
+          tl.fromTo("#s04-bits", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, tB + 0.6);
+          SQ.scramble(tl, q("#s04-bk"), tB + 0.7, 0.6, 41);
+          const hit = tB + 1.85;
+          tl.set("#s04-boltwrap", { rotation: 145 }, 0);
+          tl.fromTo("#s04-bolt", { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: 0.22, ease: "power2.in" }, hit - 0.22);
+          tl.to("#s04-bolt", { opacity: 0, duration: 0.25 }, hit + 0.05);
+          tl.fromTo("#s04-flash", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1.4, duration: 0.12, ease: "power2.out" }, hit);
+          tl.to("#s04-flash", { opacity: 0, scale: 2.2, duration: 0.7, ease: "power2.out" }, hit + 0.12);
+          tl.fromTo("#s04-ring1", { opacity: 1, scale: 0.2 }, { opacity: 0, scale: 3.2, duration: 0.9, ease: "power2.out" }, hit);
+          tl.fromTo("#s04-ring2", { opacity: 1, scale: 0.2 }, { opacity: 0, scale: 4.6, duration: 1.2, ease: "power2.out" }, hit + 0.12);
+          tl.fromTo("#s04-chip", { x: 0 }, { keyframes: [{ x: -14 }, { x: 11 }, { x: -7 }, { x: 4 }, { x: 0 }], duration: 0.35, ease: "none" }, hit);
+          tl.fromTo("#s04-v1", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(3)" }, hit + 0.08);
+          tl.fromTo("#s04-seu", { opacity: 0 }, { opacity: 1, duration: 0.2 }, hit + 0.2);
+          tl.to("#s04-seu", { opacity: 0.4, duration: 0.15, yoyo: true, repeat: 5, ease: "none" }, hit + 0.45);
+
+          // ---- C: "Linux can crash." ----
+          const tC = at("vo05c", 0);
+          tl.to("#s04-lab", { opacity: 0.18, duration: 0.15 }, tC - 0.1);
+          tl.fromTo("#s04-hC", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: "expo.out" }, tC - 0.05);
+          tl.fromTo("#s04-term", { opacity: 0, scale: 0.94, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.2, ease: "expo.out" }, tC - 0.1);
+          tl.fromTo("#s04-term .s04-tl", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.08, stagger: 0.17, ease: "none" }, tC);
+          tl.fromTo("#s04-shake", { x: 0, y: 0 }, { keyframes: [{ x: -16, y: 6 }, { x: 13, y: -8 }, { x: -9, y: 4 }, { x: 6, y: -2 }, { x: 0, y: 0 }], duration: 0.4, ease: "none" }, tC + 0.68);
+          tl.to(["#s04-hC", "#s04-term"], { opacity: 0, duration: 0.25, ease: "power2.in" }, at("vo05d", 0) - 0.3);
+          tl.to("#s04-lab", { opacity: 0.0, duration: 0.3 }, at("vo05d", 0) - 0.3);
+
+          // ---- D: "Or worse, the system keeps running, while its answer is silently wrong." ----
+          const tD = at("vo05d", 0);
+          tl.fromTo("#s04-dash", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, tD);
+          tl.fromTo("#s04-ekg", { strokeDasharray: "1400", strokeDashoffset: 1400 }, { strokeDashoffset: 0, duration: 1.6, ease: "none" }, tD + 0.3);
+          tl.fromTo("#s04-hD", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, at("vo05d", 2) + 0.2);
+          tl.fromTo("#s04-stamp", { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.2)" }, at("vo05d", 2) + 0.9);
+          tl.fromTo("#s04-res", { x: 0, color: "#eef4ff" }, { keyframes: [{ x: 8, color: "#f3ac3d" }, { x: -6 }, { x: 4 }, { x: 0 }], duration: 0.3, ease: "none" }, at("vo05d", 2) + 0.85);
+          tl.to("#s04-shake", { opacity: 0, duration: 0.35, ease: "power2.in" }, 12.25);
+
+          window.__timelines["s04-problem"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

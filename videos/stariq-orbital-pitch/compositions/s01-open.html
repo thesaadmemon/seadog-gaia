@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .s01 {
+          position: absolute;
+          inset: 0;
+        }
+        .s01-bgwrap {
+          position: absolute;
+          inset: 0;
+          transform-origin: 50% 70%;
+        }
+        .s01-bgwrap video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .s01-shade {
+          background: radial-gradient(ellipse at 15% 85%, rgba(2, 6, 16, 0.75) 0%, rgba(2, 6, 16, 0) 55%);
+        }
+        .s01-copy {
+          position: absolute;
+          left: 120px;
+          bottom: 190px;
+          width: 1120px;
+          display: flex;
+          flex-direction: column;
+          gap: 22px;
+        }
+        .s01-copy .headline {
+          font-size: 88px;
+        }
+        .s01-line {
+          display: block;
+        }
+        .s01-panel {
+          position: absolute;
+          right: 120px;
+          top: 170px;
+          width: 560px;
+          padding: 30px 34px;
+          display: flex;
+          flex-direction: column;
+          gap: 22px;
+        }
+        .s01-row {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .s01-label {
+          display: flex;
+          justify-content: space-between;
+          font-family: "JetBrains Mono", monospace;
+          font-size: 20px;
+          letter-spacing: 0.16em;
+          color: #a9bddc;
+        }
+        .s01-label b {
+          color: #eef4ff;
+        }
+        .s01-track {
+          width: 100%;
+          height: 16px;
+          background: rgba(120, 170, 255, 0.14);
+          border-radius: 2px;
+          overflow: hidden;
+        }
+        .s01-fill {
+          width: 100%;
+          height: 100%;
+          transform-origin: 0 50%;
+          background: #4a86ff;
+        }
+        .s01-fill.slow {
+          background: #22c7ae;
+        }
+        .s01-warn {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 20px;
+          letter-spacing: 0.22em;
+          color: #f3ac3d;
+        }
+        .s01-q {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 300px;
+          text-align: center;
+          font-size: 104px;
+          padding: 0 160px;
+        }
+        .s01-q .think {
+          color: #4a86ff;
+          text-shadow: 0 0 40px rgba(74, 134, 255, 0.65);
+        }
+      </style>
+
+      <div id="root" data-composition-id="s01-open" data-width="1920" data-height="1080">
+        <div class="s01">
+          <div class="s01-bgwrap" id="s01-bgwrap">
+            <video id="s01-bg" src="assets/broll/orbital.mp4" muted playsinline data-start="0" data-duration="10.1" data-media-start="0" data-track-index="0"></video>
+          </div>
+          <div class="scene-shade s01-shade"></div>
+
+          <div class="s01-copy" id="s01-copy">
+            <div class="kicker" id="s01-kicker" data-text="LOW EARTH ORBIT · 90-MINUTE PERIOD">LOW EARTH ORBIT · 90-MINUTE PERIOD</div>
+            <h1 class="headline">
+              <span class="s01-line" id="s01-l1">Every 90 minutes,</span>
+              <span class="s01-line" id="s01-l2">a satellite circles our planet.</span>
+            </h1>
+          </div>
+
+          <div class="s01-panel panel" id="s01-panel">
+            <div class="kicker" id="s01-pk" data-text="ONBOARD DATA LINK">ONBOARD DATA LINK</div>
+            <div class="s01-row">
+              <div class="s01-label"><span>SENSOR DATA CAPTURED</span><b id="s01-cap">0%</b></div>
+              <div class="s01-track"><div class="s01-fill" id="s01-fill-a"></div></div>
+            </div>
+            <div class="s01-row">
+              <div class="s01-label"><span>DOWNLINK TO EARTH</span><b id="s01-dl">0%</b></div>
+              <div class="s01-track"><div class="s01-fill slow" id="s01-fill-b"></div></div>
+            </div>
+            <div class="s01-warn" id="s01-warn">▲ MORE DATA THAN IT CAN SEND HOME</div>
+          </div>
+
+          <h2 class="headline s01-q" id="s01-q">So what if it could <span class="think">think</span> for itself?</h2>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(0);
+          const q = (s) => document.querySelector(s);
+
+          // slow push-in on the orbital sunrise
+          tl.fromTo("#s01-bgwrap", { scale: 1.0 }, { scale: 1.07, duration: 10.1, ease: "none" }, 0);
+
+          // narration: "Every ninety minutes, / a satellite circles our planet,"
+          SQ.scramble(tl, q("#s01-kicker"), 0.9, 0.9, 11);
+          const w1 = SQ.splitWords(q("#s01-l1"));
+          const w2 = SQ.splitWords(q("#s01-l2"));
+          tl.fromTo(w1, { opacity: 0, y: 46, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.55, ease: "power3.out", stagger: 0.09 }, at("vo01", 0) - 0.05);
+          tl.fromTo(w2, { opacity: 0, y: 46, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.55, ease: "power3.out", stagger: 0.08 }, at("vo01", 1) - 0.05);
+
+          // "capturing more data than it can ever send home."
+          const p0 = at("vo01", 2);
+          tl.fromTo("#s01-panel", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, p0 - 0.35);
+          SQ.scramble(tl, q("#s01-pk"), p0 - 0.2, 0.7, 12);
+          tl.fromTo("#s01-fill-a", { scaleX: 0 }, { scaleX: 1, duration: 2.2, ease: "power2.inOut" }, p0);
+          tl.fromTo("#s01-fill-b", { scaleX: 0 }, { scaleX: 0.16, duration: 2.2, ease: "power1.out" }, p0);
+          SQ.count(tl, q("#s01-cap"), 0, 100, p0, 2.2, (v) => Math.round(v) + "%", "power2.inOut");
+          SQ.count(tl, q("#s01-dl"), 0, 16, p0, 2.2, (v) => Math.round(v) + "%", "power1.out");
+          tl.fromTo("#s01-warn", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, p0 + 2.0);
+          tl.to("#s01-warn", { opacity: 0.35, duration: 0.25, ease: "none", repeat: 3, yoyo: true }, p0 + 2.4);
+
+          // clear the stage for the question
+          const qa = at("vo02", 0);
+          tl.to("#s01-copy", { opacity: 0, y: -30, filter: "blur(8px)", duration: 0.5, ease: "power2.in" }, qa - 0.55);
+          tl.to("#s01-panel", { opacity: 0, x: 40, duration: 0.45, ease: "power2.in" }, qa - 0.5);
+
+          // "So what if it could think for itself?"
+          const wq = SQ.splitWords(q("#s01-q"));
+          tl.fromTo(wq, { opacity: 0, y: 30, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)", stagger: 0.075 }, qa);
+          tl.fromTo("#s01-q .think", { textShadow: "0 0 0px rgba(74,134,255,0)" }, { textShadow: "0 0 60px rgba(74,134,255,0.95)", duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, qa + 0.75);
+
+          // exit into the title flash
+          tl.to("#s01-q", { opacity: 0, scale: 1.12, filter: "blur(14px)", duration: 0.4, ease: "power2.in" }, 9.65);
+
+          window.__timelines["s01-open"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

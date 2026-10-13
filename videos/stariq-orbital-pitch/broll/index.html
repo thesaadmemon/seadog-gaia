@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>STARIQ Orbital B-Roll</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #02040a;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #02040a;
+      }
+      #gl {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./assets/vendor/three.module.min.js",
+          "three/addons/": "./assets/vendor/three-addons/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!--
+      Photoreal orbital b-roll for the STARIQ pitch. One WebGL canvas, seven shots cut by time.
+      Earth: NASA Blue Marble / Black Marble derived textures (three.js examples).
+      Satellites: NASA 3D Resources (public domain) — Suomi NPP, Terra, Landsat 8.
+      Stars: Milky Way cube map. Everything is a pure function of HyperFrames time.
+    -->
+    <div
+      id="root"
+      data-composition-id="broll"
+      data-no-timeline
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="94"
+    >
+      <canvas id="gl" width="1920" height="1080"></canvas>
+    </div>
+    <script type="module">
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+      const W = 1920;
+      const H = 1080;
+
+      // ---- shot list (seconds). Cut points are declared once and read everywhere. ----
+      const SHOTS = [
+        { id: "sunrise", dur: 13 },
+        { id: "flyby", dur: 10 },
+        { id: "dark", dur: 7 },
+        { id: "constellation", dur: 16 },
+        { id: "observe", dur: 12 },
+        { id: "night", dur: 24 },
+        { id: "closing", dur: 12 },
+      ];
+      let acc = 0;
+      for (const s of SHOTS) {
+        s.start = acc;
+        acc += s.dur;
+      }
+
+      function shotAt(t) {
+        for (let i = SHOTS.length - 1; i >= 0; i--) if (t >= SHOTS[i].start) return SHOTS[i];
+        return SHOTS[0];
+      }
+
+      // ---- seeded PRNG (determinism) ----
+      function mulberry32(a) {
+        return function () {
+          a |= 0;
+          a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+      const clamp01 = (x) => Math.min(1, Math.max(0, x));
+      const lerp = (a, b, x) => a + (b - a) * x;
+      const smooth = (a, b, x) => {
+        const u = clamp01((x - a) / (b - a));
+        return u * u * (3 - 2 * u);
+      };
+
+      // ---- renderer ----
+      const canvas = document.getElementById("gl");
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, preserveDrawingBuffer: true });
+      renderer.setPixelRatio(1);
+      renderer.setSize(W, H, false);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.0;
+      renderer.autoClear = false;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, W / H, 0.004, 600);
+      const satScene = new THREE.Scene();
+      const satCam = new THREE.PerspectiveCamera(40, W / H, 0.00005, 2);
+
+      const tl = new THREE.TextureLoader();
+      const loadTex = (url, srgb = true) => {
+        const t = tl.load(url);
+        if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+        t.anisotropy = 8;
+        return t;
+      };
+      const dayMap = loadTex("./assets/tex/earth-day.jpg");
+      const nightMap = loadTex("./assets/tex/earth-night.jpg");
+      const brcMap = loadTex("./assets/tex/earth-brc.jpg", false);
+      brcMap.wrapS = THREE.RepeatWrapping;
+      const flareTex = loadTex("./assets/tex/flare0.png");
+      const cube = new THREE.CubeTextureLoader().load(
+        ["px", "nx", "py", "ny", "pz", "nz"].map((f) => `./assets/tex/mw-${f}.jpg`),
+      );
+      cube.colorSpace = THREE.SRGBColorSpace;
+      scene.background = cube;
+      scene.backgroundIntensity = 0.55;
+
+      // ---- Earth ----
+      const sunDir = new THREE.Vector3(1, 0, 0);
+      const earthUniforms = {
+        dayMap: { value: dayMap },
+        nightMap: { value: nightMap },
+        brcMap: { value: brcMap },
+        sunDir: { value: sunDir },
+        camPos: { value: new THREE.Vector3() },
+        cloudShift: { value: 0 },
+        footDir: { value: new THREE.Vector3(0, 1, 0) },
+        footR: { value: 0.12 },
+        footAmt: { value: 0 },
+        nightBoost: { value: 1 },
+      };
+      const earthMat = new THREE.ShaderMaterial({
+        uniforms: earthUniforms,
+        vertexShader: /* glsl */ `
+          varying vec2 vUv; varying vec3 vN; varying vec3 vP; varying vec3 vObjN;
+          void main(){
+            vUv = uv;
+            vec4 wp = modelMatrix * vec4(position,1.0);
+            vP = wp.xyz;
+            vN = normalize(mat3(modelMatrix) * normal);
+            vObjN = normalize(normal);
+            gl_Position = projectionMatrix * viewMatrix * wp;
+          }`,
+        fragmentShader: /* glsl */ `
+          uniform sampler2D dayMap; uniform sampler2D nightMap; uniform sampler2D brcMap;
+          uniform vec3 sunDir; uniform vec3 camPos; uniform float cloudShift;
+          uniform vec3 footDir; uniform float footR; uniform float footAmt; uniform float nightBoost;
+          varying vec2 vUv; varying vec3 vN; varying vec3 vP; varying vec3 vObjN;
+          void main(){
+            vec3 N = normalize(vN);
+            vec3 V = normalize(camPos - vP);
+            vec3 day = texture2D(dayMap, vUv).rgb;
+            vec3 night = texture2D(nightMap, vUv).rgb;
+            vec3 brc = texture2D(brcMap, vUv).rgb;
+            float rough = brc.g;
+            float clouds = texture2D(brcMap, vUv + vec2(cloudShift, 0.0)).b;
+            clouds = smoothstep(0.08, 0.9, clouds);
+            // soft cloud shadow, sampled a little towards the sun
+            float NdL = dot(N, sunDir);
+            float lambert = max(NdL, 0.0);
+            float wrap = smoothstep(-0.12, 0.35, NdL);
+            vec3 surf = day * (lambert * 1.25 + wrap * 0.10 + 0.004);
+            // ocean glint
+            vec3 Hh = normalize(sunDir + V);
+            float oceanMask = 1.0 - smoothstep(0.25, 0.6, rough);
+            float spec = pow(max(dot(N, Hh), 0.0), 520.0) * oceanMask * lambert;
+            float sheen = pow(max(dot(N, Hh), 0.0), 60.0) * oceanMask * lambert * 0.035;
+            surf += vec3(1.0, 0.86, 0.66) * (spec * 0.9 + sheen);
+            surf *= 1.0 - clouds * 0.35;
+            vec3 cloudCol = vec3(1.0, 0.99, 0.97) * (lambert * 1.25 + wrap * 0.06 + 0.002);
+            vec3 col = mix(surf, cloudCol, clouds * 0.92);
+            // city lights on the night side
+            float darkSide = 1.0 - smoothstep(-0.22, 0.06, NdL);
+            vec3 lights = pow(night, vec3(1.15)) * vec3(1.0, 0.72, 0.42) * 2.4 * nightBoost * darkSide * (1.0 - clouds * 0.75);
+            col += lights;
+            col += day * vec3(0.10, 0.16, 0.28) * 0.05 * darkSide;
+            // atmospheric haze toward the limb
+            float mu = max(dot(N, V), 0.0);
+            float fres = pow(1.0 - mu, 2.6);
+            float sunset = smoothstep(-0.25, 0.02, NdL) * (1.0 - smoothstep(0.02, 0.38, NdL));
+            vec3 atmo = mix(vec3(0.24, 0.50, 1.0), vec3(1.0, 0.42, 0.14), sunset);
+            col = mix(col, atmo * (wrap * 0.9 + 0.02), fres * 0.65 * smoothstep(-0.3, 0.25, NdL));
+            col += atmo * fres * 0.18 * smoothstep(-0.25, 0.4, NdL);
+            // sensor footprint (Earth-observation shots)
+            float ang = acos(clamp(dot(N, normalize(footDir)), -1.0, 1.0));
+            float ring = smoothstep(footR, footR * 0.96, ang) - smoothstep(footR * 0.94, footR * 0.9, ang);
+            float fill = smoothstep(footR, footR * 0.8, ang);
+            vec2 g = abs(fract(vUv * vec2(720.0, 360.0)) - 0.5);
+            float grid = (1.0 - smoothstep(0.0, 0.06, min(g.x, g.y))) * fill;
+            col += vec3(0.25, 0.75, 1.0) * footAmt * (ring * 1.6 + fill * 0.12 + grid * 0.35);
+            gl_FragColor = vec4(col, 1.0);
+            #include <tonemapping_fragment>
+            #include <colorspace_fragment>
+          }`,
+      });
+      const earth = new THREE.Mesh(new THREE.SphereGeometry(1, 256, 128), earthMat);
+      scene.add(earth);
+
+      // ---- atmosphere shell: analytic limb scattering ----
+      const ATMO_R = 1.022;
+      const atmoMat = new THREE.ShaderMaterial({
+        uniforms: { sunDir: { value: sunDir }, camPos: earthUniforms.camPos, strength: { value: 1.0 } },
+        vertexShader: /* glsl */ `
+          varying vec3 vW;
+          void main(){ vec4 wp = modelMatrix * vec4(position,1.0); vW = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }`,
+        fragmentShader: /* glsl */ `
+          uniform vec3 sunDir; uniform vec3 camPos; uniform float strength; varying vec3 vW;
+          void main(){
+            vec3 V = normalize(vW - camPos);
+            float b = dot(-camPos, V);
+            vec3 P = camPos + V * max(b, 0.0);
+            float d = length(P);
+            float h = clamp((d - 1.0) / (${ATMO_R.toFixed(3)} - 1.0), 0.0, 1.0);
+            float dens = exp(-h * 3.2) * (1.0 - smoothstep(0.82, 1.0, h));
+            float sunAmt = dot(normalize(P), sunDir);
+            vec3 warm = mix(vec3(1.0, 0.30, 0.06), vec3(1.0, 0.62, 0.30), h);
+            vec3 col = mix(warm, vec3(0.26, 0.52, 1.0), smoothstep(-0.10, 0.30, sunAmt) * 0.85 + smoothstep(0.25, 0.9, h) * 0.6);
+            float light = smoothstep(-0.30, 0.10, sunAmt);
+            float mie = pow(max(dot(V, sunDir), 0.0), 6.0);
+            float side = 0.45 + 0.55 * pow(max(dot(V, sunDir), 0.0), 2.0);
+            vec3 c = col * dens * light * 1.1 * side + vec3(1.0, 0.74, 0.48) * mie * dens * 2.6 * smoothstep(-0.3, 0.05, sunAmt);
+            gl_FragColor = vec4(c * strength, 1.0);
+            #include <tonemapping_fragment>
+            #include <colorspace_fragment>
+          }`,
+        side: THREE.BackSide,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const atmo = new THREE.Mesh(new THREE.SphereGeometry(ATMO_R, 192, 96), atmoMat);
+      scene.add(atmo);
+
+      // ---- sun: occluded core + unoccluded bloom ----
+      const sunCore = new THREE.Sprite(
+        new THREE.SpriteMaterial({ map: flareTex, color: 0xffffff, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }),
+      );
+      const sunBloom = new THREE.Sprite(
+        new THREE.SpriteMaterial({ map: flareTex, color: 0xffe2b8, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false, transparent: true }),
+      );
+      sunBloom.renderOrder = 10;
+      scene.add(sunCore, sunBloom);
+
+      function placeSun(visibleScale = 1) {
+        const p = sunDir.clone().multiplyScalar(300);
+        sunCore.position.copy(p);
+        sunBloom.position.copy(p);
+        sunCore.scale.setScalar(70);
+        // fraction of the sun disc clear of the Earth's limb, seen from the camera
+        const toSun = sunDir.clone();
+        const toEarth = camera.position.clone().negate();
+        const dist = toEarth.length();
+        const earthAng = Math.asin(Math.min(1, ATMO_R / dist));
+        const sep = toSun.angleTo(toEarth.normalize());
+        const clear = smooth(-0.01, 0.03, sep - earthAng);
+        sunBloom.material.opacity = clear;
+        sunBloom.scale.setScalar(lerp(40, 180, clear) * visibleScale);
+        sunCore.material.opacity = 1;
+        return clear;
+      }
+
+      // ---- constellation layer ----
+      const rng = mulberry32(20261013);
+      const N_SATS = 2600;
+      const shells = [1.08, 1.1, 1.13, 1.17, 1.22];
+      const sats = [];
+      for (let i = 0; i < N_SATS; i++) {
+        const planes = 72;
+        const plane = Math.floor(rng() * planes);
+        const inc = [0.93, 0.97, 1.25, 1.53, 0.74][plane % 5] + (rng() - 0.5) * 0.02;
+        const raan = (plane / planes) * Math.PI * 2 + (rng() - 0.5) * 0.01;
+        const r = shells[plane % shells.length];
+        const phase = rng() * Math.PI * 2;
+        const w = (0.16 / Math.pow(r, 1.5)) * (rng() < 0.5 ? 1 : 1);
+        // orbital-plane basis
+        const ax = new THREE.Vector3(Math.cos(raan), 0, Math.sin(raan));
+        const n = new THREE.Vector3(0, 1, 0).applyAxisAngle(ax, inc);
+        const bx = new THREE.Vector3().crossVectors(n, ax).normalize();
+        sats.push({ ax, bx, r, phase, w, order: rng() });
+      }
+      sats.sort((a, b) => a.order - b.order);
+      const satPos = new Float32Array(N_SATS * 3);
+      const satAlpha = new Float32Array(N_SATS);
+      const satGeo = new THREE.BufferGeometry();
+      satGeo.setAttribute("position", new THREE.BufferAttribute(satPos, 3));
+      satGeo.setAttribute("alpha", new THREE.BufferAttribute(satAlpha, 1));
+      const satMat = new THREE.ShaderMaterial({
+        uniforms: { size: { value: 9.0 } },
+        vertexShader: /* glsl */ `
+          attribute float alpha; varying float vA; uniform float size;
+          void main(){ vA = alpha; vec4 mv = modelViewMatrix * vec4(position,1.0); gl_PointSize = size * (3.0 / -mv.z); gl_Position = projectionMatrix * mv; }`,
+        fragmentShader: /* glsl */ `
+          varying float vA;
+          void main(){ vec2 c = gl_PointCoord - 0.5; float d = length(c); float core = smoothstep(0.5, 0.0, d); float glow = pow(core, 3.0);
+            vec3 col = mix(vec3(0.35, 0.75, 1.0), vec3(1.0), glow);
+            gl_FragColor = vec4(col * (core * 0.6 + glow * 1.4) * vA, 1.0); }`,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const satPoints = new THREE.Points(satGeo, satMat);
+      satPoints.frustumCulled = false;
+      scene.add(satPoints);
+
+      const orbitGroup = new THREE.Group();
+      const orbitMat = new THREE.LineBasicMaterial({ color: 0x4fa8ff, transparent: true, opacity: 0.14, blending: THREE.AdditiveBlending, depthWrite: false });
+      for (let k = 0; k < 36; k++) {
+        const s = sats[k * 37];
+        const pts = [];
+        for (let j = 0; j <= 256; j++) {
+          const a = (j / 256) * Math.PI * 2;
+          pts.push(s.ax.clone().multiplyScalar(Math.cos(a) * s.r).add(s.bx.clone().multiplyScalar(Math.sin(a) * s.r)));
+        }
+        orbitGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), orbitMat));
+      }
+      scene.add(orbitGroup);
+
+      function updateConstellation(t, reveal, globalAlpha) {
+        const count = Math.floor(N_SATS * reveal);
+        for (let i = 0; i < N_SATS; i++) {
+          const s = sats[i];
+          const th = s.phase + s.w * t;
+          const c = Math.cos(th) * s.r;
+          const sn = Math.sin(th) * s.r;
+          satPos[i * 3] = s.ax.x * c + s.bx.x * sn;
+          satPos[i * 3 + 1] = s.ax.y * c + s.bx.y * sn;
+          satPos[i * 3 + 2] = s.ax.z * c + s.bx.z * sn;
+          const fadeIdx = clamp01((N_SATS * reveal - i) / 60);
+          satAlpha[i] = i < count + 60 ? fadeIdx * globalAlpha : 0;
+        }
+        satGeo.attributes.position.needsUpdate = true;
+        satGeo.attributes.alpha.needsUpdate = true;
+      }
+
+      // ---- procedural surface detail (seeded) ----
+      function canvasTex(size, draw, srgb) {
+        const c = document.createElement("canvas");
+        c.width = c.height = size;
+        draw(c.getContext("2d"), size);
+        const t = new THREE.CanvasTexture(c);
+        t.wrapS = t.wrapT = THREE.RepeatWrapping;
+        t.anisotropy = 8;
+        if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+        return t;
+      }
+      const foilBump = canvasTex(512, (g, n) => {
+        const r = mulberry32(7);
+        g.fillStyle = "#808080";
+        g.fillRect(0, 0, n, n);
+        for (let i = 0; i < 900; i++) {
+          const x = r() * n, y = r() * n, s = 8 + r() * 46;
+          const v = Math.floor(70 + r() * 120);
+          g.fillStyle = `rgb(${v},${v},${v})`;
+          g.beginPath();
+          g.moveTo(x, y);
+          g.lineTo(x + (r() - 0.5) * s * 2, y + (r() - 0.5) * s * 2);
+          g.lineTo(x + (r() - 0.5) * s * 2, y + (r() - 0.5) * s * 2);
+          g.closePath();
+          g.fill();
+        }
+      }, false);
+      foilBump.repeat.set(3, 3);
+      const cellMap = canvasTex(1024, (g, n) => {
+        const r = mulberry32(11);
+        g.fillStyle = "#b9c2d0";
+        g.fillRect(0, 0, n, n);
+        const k = 16, cs = n / k;
+        for (let i = 0; i < k; i++)
+          for (let j = 0; j < k; j++) {
+            const v = 18 + r() * 10;
+            g.fillStyle = `rgb(${v * 0.55},${v * 0.75},${v * 1.9})`;
+            g.fillRect(i * cs + 2, j * cs + 2, cs - 4, cs - 4);
+            g.fillStyle = "rgba(160,175,200,0.35)";
+            g.fillRect(i * cs + 2, j * cs + cs * 0.5, cs - 4, 1);
+          }
+      }, true);
+      cellMap.repeat.set(2, 2);
+
+      function dressMaterial(m) {
+        if (!m.isMeshStandardMaterial) return;
+        const nm = (m.name || "").toLowerCase();
+        m.envMapIntensity = 1.4;
+        if (nm.includes("solarpanel-face") || nm.includes("solarpanel-back") || /lro-solarpanel-\d/.test(nm)) {
+          m.color.setRGB(1, 1, 1);
+          m.map = cellMap;
+          m.metalness = 0.55;
+          m.roughness = 0.22;
+        } else if (nm.includes("gold") || nm.includes("mainpanels")) {
+          m.color.setRGB(1.0, 0.72, 0.28);
+          m.metalness = 1.0;
+          m.roughness = 0.3;
+          m.bumpMap = foilBump;
+          m.bumpScale = 3.0;
+        } else if (nm.includes("bronze") || nm.includes("mainsections")) {
+          m.color.setRGB(0.92, 0.74, 0.46);
+          m.metalness = 1.0;
+          m.roughness = 0.34;
+          m.bumpMap = foilBump;
+          m.bumpScale = 2.5;
+        } else if (nm.includes("silver")) {
+          m.color.setRGB(0.86, 0.87, 0.9);
+          m.metalness = 1.0;
+          m.roughness = 0.26;
+          m.bumpMap = foilBump;
+          m.bumpScale = 1.5;
+        } else if (nm.includes("white")) {
+          m.color.setRGB(0.78, 0.79, 0.8);
+          m.metalness = 0.0;
+          m.roughness = 0.55;
+        } else if (nm.includes("grey")) {
+          m.metalness = 0.6;
+          m.roughness = 0.4;
+        } else {
+          m.metalness = 0.3;
+          m.roughness = 0.55;
+        }
+        m.needsUpdate = true;
+      }
+
+      // ---- satellites (NASA 3D Resources) ----
+      const loader = new GLTFLoader();
+      const models = {};
+      function loadModel(key, url, size) {
+        loader.load(url, (g) => {
+          const obj = g.scene;
+          const box = new THREE.Box3().setFromObject(obj);
+          const dim = box.getSize(new THREE.Vector3());
+          const center = box.getCenter(new THREE.Vector3());
+          obj.position.sub(center);
+          const holder = new THREE.Group();
+          const inner = new THREE.Group();
+          inner.add(obj);
+          inner.scale.setScalar(size / Math.max(dim.x, dim.y, dim.z));
+          holder.add(inner);
+          obj.traverse((o) => {
+            if (o.isMesh && o.material) {
+              const mats = Array.isArray(o.material) ? o.material : [o.material];
+              mats.forEach((m) => dressMaterial(m));
+            }
+          });
+          holder.visible = false;
+          satScene.add(holder);
+          models[key] = holder;
+        });
+      }
+      loadModel("landsat", "./assets/models/landsat8.glb", 1);
+
+      const satSun = new THREE.DirectionalLight(0xfff2e0, 3.2);
+      const satFill = new THREE.HemisphereLight(0x0a0f1a, 0x3a6ab0, 0.9);
+      satScene.add(satSun, satSun.target, satFill);
+
+      // environment for metal reflections: black sky, blue Earth below, hot sun
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      const envScene = new THREE.Scene();
+      const envUniforms = { up: { value: new THREE.Vector3(0, 1, 0) }, sun: { value: new THREE.Vector3(1, 0, 0) } };
+      const envSphere = new THREE.Mesh(
+        new THREE.SphereGeometry(10, 64, 32),
+        new THREE.ShaderMaterial({
+          uniforms: envUniforms,
+          side: THREE.BackSide,
+          vertexShader: `varying vec3 vD; void main(){ vD = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0);} `,
+          fragmentShader: `uniform vec3 up; uniform vec3 sun; varying vec3 vD;
+            void main(){ vec3 d = normalize(vD); float h = dot(d, up);
+              vec3 earthCol = mix(vec3(0.06,0.16,0.36), vec3(0.22,0.38,0.62), smoothstep(-1.0,-0.2,h));
+              vec3 c = mix(earthCol, vec3(0.004,0.006,0.012), smoothstep(-0.18, 0.02, h));
+              float s = max(dot(d, sun), 0.0);
+              c += vec3(1.0,0.95,0.85) * (pow(s, 900.0) * 60.0 + pow(s, 30.0) * 0.6);
+              gl_FragColor = vec4(c, 1.0); }`,
+        }),
+      );
+      envScene.add(envSphere);
+      const envCache = {};
+      function envFor(key, up, sun) {
+        if (!envCache[key]) {
+          envUniforms.up.value.copy(up).normalize();
+          envUniforms.sun.value.copy(sun).normalize();
+          envCache[key] = pmrem.fromScene(envScene, 0.02).texture;
+        }
+        return envCache[key];
+      }
+
+      function showModel(key) {
+        for (const k in models) models[k].visible = k === key;
+        return models[key];
+      }
+
+      // ---- helpers ----
+      const tmp = new THREE.Vector3();
+      function sph(lat, lon, r = 1) {
+        const la = THREE.MathUtils.degToRad(lat);
+        const lo = THREE.MathUtils.degToRad(lon);
+        return new THREE.Vector3(Math.cos(la) * Math.cos(lo) * r, Math.sin(la) * r, -Math.cos(la) * Math.sin(lo) * r);
+      }
+      function sunFromAngles(az, el) {
+        const a = THREE.MathUtils.degToRad(az);
+        const e = THREE.MathUtils.degToRad(el);
+        return new THREE.Vector3(Math.cos(e) * Math.sin(a), Math.sin(e), -Math.cos(e) * Math.cos(a)).normalize();
+      }
+
+      function resetLayers() {
+        satPoints.visible = false;
+        orbitGroup.visible = false;
+        sunCore.visible = true;
+        sunBloom.visible = true;
+        earthUniforms.footAmt.value = 0;
+        earthUniforms.nightBoost.value = 1;
+        atmoMat.uniforms.strength.value = 1;
+        scene.backgroundIntensity = 0.55;
+        renderer.toneMappingExposure = 1.0;
+        for (const k in models) models[k].visible = false;
+        camera.fov = 40;
+        camera.up.set(0, 1, 0);
+      }
+
+      // ---- shots ----
+      // Each shot sets camera + sun + layers from its local time.
+      const SHOT_FN = {
+        sunrise(lt, u) {
+          // Low orbit over the night side; the sun climbs over the limb ahead of us.
+          earth.rotation.y = 2.9 + lt * 0.0035;
+          const alt = 0.12;
+          const C = new THREE.Vector3(0, 0, 1 + alt);
+          camera.position.copy(C);
+          camera.up.set(0, 0, 1);
+          const dip = Math.acos(1 / (1 + alt));
+          const pitch = -dip + THREE.MathUtils.degToRad(lerp(6.5, 8.5, ease(u)));
+          const yaw = THREE.MathUtils.degToRad(lerp(-5, 3, ease(u)));
+          const fwd = new THREE.Vector3(Math.sin(yaw) * Math.cos(pitch), Math.cos(yaw) * Math.cos(pitch), Math.sin(pitch));
+          camera.lookAt(C.clone().add(fwd));
+          camera.rotateZ(THREE.MathUtils.degToRad(lerp(-6, -3, ease(u))));
+          camera.fov = 34;
+          const e = -dip + THREE.MathUtils.degToRad(lerp(-2.2, 3.2, smooth(0.1, 1.0, u)));
+          const a = THREE.MathUtils.degToRad(lerp(-3.5, -1.5, u));
+          sunDir.set(Math.sin(a) * Math.cos(e), Math.cos(a) * Math.cos(e), Math.sin(e)).normalize();
+          scene.backgroundIntensity = lerp(0.75, 0.3, smooth(0.45, 0.95, u));
+          renderer.toneMappingExposure = lerp(1.0, 1.08, u);
+          earthUniforms.nightBoost.value = 1.5;
+          earthUniforms.cloudShift.value = lt * 0.0005;
+          placeSun();
+        },
+        flyby(lt, u) {
+          // Landsat-class satellite crossing over the sunlit globe.
+          earth.rotation.y = 0.55 + lt * 0.006;
+          camera.position.set(lerp(-0.06, 0.04, u), 0.2, 1.95);
+          camera.fov = 36;
+          camera.lookAt(new THREE.Vector3(0.62, 0.78, 0.0));
+          camera.rotateZ(THREE.MathUtils.degToRad(lerp(-9, -6, u)));
+          sunDir.copy(new THREE.Vector3(-0.42, 0.55, 0.72).normalize());
+          earthUniforms.cloudShift.value = lt * 0.0008;
+          scene.backgroundIntensity = 0.45;
+          placeSun();
+          const m = showModel("landsat");
+          if (m) {
+            const fwd = new THREE.Vector3();
+            camera.getWorldDirection(fwd);
+            const right = new THREE.Vector3().crossVectors(fwd, camera.up).normalize();
+            const upv = new THREE.Vector3().crossVectors(right, fwd).normalize();
+            const p = camera.position.clone().add(fwd.clone().multiplyScalar(0.014)).add(right.clone().multiplyScalar(lerp(0.0042, -0.0024, ease(u)))).add(upv.clone().multiplyScalar(lerp(0.0006, 0.0012, u)));
+            m.position.copy(p);
+            m.scale.setScalar(0.0058);
+            m.rotation.set(0.5 + u * 0.18, 0.84 + u * 0.5, 0.35);
+            satSun.intensity = 3.4;
+            satFill.intensity = 0.7;
+            satSun.position.copy(p.clone().add(sunDir));
+            satSun.target.position.copy(p);
+            satFill.position.copy(p.clone().normalize());
+            satScene.environment = envFor("flyby", p.clone().normalize(), sunDir);
+          }
+        },
+        dark(lt, u) {
+          // Back-lit satellite over the night limb — the hostile environment.
+          earth.rotation.y = 4.2 + lt * 0.004;
+          camera.position.set(0.0, -0.25, 1.5);
+          camera.fov = 36;
+          camera.lookAt(new THREE.Vector3(0.12, 0.62, 0.0));
+          camera.rotateZ(THREE.MathUtils.degToRad(lerp(5, 7, u)));
+          sunDir.copy(new THREE.Vector3(0.92, 0.32, -0.22).normalize());
+          scene.backgroundIntensity = 0.75;
+          earthUniforms.nightBoost.value = 1.4;
+          placeSun(0.6);
+          const m = showModel("landsat");
+          if (m) {
+            const fwd = new THREE.Vector3();
+            camera.getWorldDirection(fwd);
+            const right = new THREE.Vector3().crossVectors(fwd, camera.up).normalize();
+            const upv = new THREE.Vector3().crossVectors(right, fwd).normalize();
+            const p = camera.position.clone().add(fwd.clone().multiplyScalar(0.016)).add(right.clone().multiplyScalar(lerp(-0.0016, 0.0004, u))).add(upv.clone().multiplyScalar(0.0012));
+            m.position.copy(p);
+            m.scale.setScalar(0.0085);
+            m.rotation.set(0.15, 0.9 + u * 0.3, -0.2);
+            satSun.intensity = 3.6;
+            satFill.intensity = 0.45;
+            satSun.position.copy(p.clone().add(sunDir));
+            satSun.target.position.copy(p);
+            satFill.position.copy(p.clone().normalize());
+            satScene.environment = envFor("dark", p.clone().normalize(), sunDir);
+          }
+        },
+        constellation(lt, u) {
+          earth.rotation.y = 1.1 + lt * 0.02;
+          const d = lerp(3.25, 2.75, ease(u));
+          const az = lerp(0.35, -0.15, u);
+          camera.position.set(Math.sin(az) * d, 0.55, Math.cos(az) * d);
+          camera.fov = 38;
+          camera.lookAt(new THREE.Vector3(0, -0.05, 0));
+          sunDir.copy(new THREE.Vector3(0.75, 0.35, 0.45).normalize());
+          satPoints.visible = true;
+          orbitGroup.visible = true;
+          orbitMat.opacity = 0.05 + 0.13 * smooth(0.05, 0.5, u);
+          orbitGroup.rotation.y = earth.rotation.y * 0.0;
+          updateConstellation(lt, lerp(0.02, 1, Math.pow(smooth(0.05, 0.95, u), 1.6)), 1);
+          sunCore.visible = false;
+          sunBloom.visible = false;
+          scene.backgroundIntensity = 0.5;
+        },
+        observe(lt, u) {
+          // Earth-observation pass: sensor footprint sweeping over the day side.
+          earth.rotation.y = 5.55 + lt * 0.012;
+          const d = 1.62;
+          camera.position.copy(new THREE.Vector3(0.25, 0.42, 1).normalize().multiplyScalar(d));
+          camera.fov = 42;
+          camera.lookAt(new THREE.Vector3(-0.05, 0.2, 0.05));
+          camera.rotateZ(THREE.MathUtils.degToRad(-8));
+          sunDir.copy(new THREE.Vector3(0.45, 0.5, 0.75).normalize());
+          const track = lerp(-0.35, 0.55, u);
+          earthUniforms.footDir.value.copy(new THREE.Vector3(Math.sin(track) * 0.4 + 0.1, 0.42 + track * 0.4, 0.9).normalize());
+          earthUniforms.footR.value = 0.07;
+          earthUniforms.footAmt.value = smooth(0.05, 0.25, u);
+          earthUniforms.cloudShift.value = lt * 0.0008;
+          placeSun();
+          sunCore.visible = false;
+          sunBloom.visible = false;
+        },
+        night(lt, u) {
+          // Slow night-side globe with city lights — backdrop for team & ask.
+          earth.rotation.y = 3.0 + lt * 0.01;
+          const d = 2.35;
+          camera.position.set(-0.55, 0.32, d);
+          camera.fov = 40;
+          camera.lookAt(new THREE.Vector3(-0.55, 0.05, 0));
+          sunDir.copy(new THREE.Vector3(0.98, 0.1, -0.35).normalize());
+          earthUniforms.nightBoost.value = 1.35;
+          scene.backgroundIntensity = 0.6;
+          placeSun();
+          sunCore.visible = false;
+          sunBloom.visible = false;
+        },
+        closing(lt, u) {
+          // Sun behind the planet: a bright atmospheric ring, slow pull-back.
+          earth.rotation.y = 0.2 + lt * 0.006;
+          const d = lerp(2.15, 3.1, ease(u));
+          camera.position.set(0, 0.06, d);
+          camera.fov = 40;
+          camera.lookAt(new THREE.Vector3(0, 0.0, 0));
+          const el = lerp(0.14, 0.24, u);
+          sunDir.copy(new THREE.Vector3(0.36, el, -1).normalize());
+          scene.backgroundIntensity = 0.45;
+          atmoMat.uniforms.strength.value = 1.15;
+          renderer.toneMappingExposure = 1.05;
+          placeSun(0.9);
+        },
+      };
+
+      const camPos = earthUniforms.camPos.value;
+      function renderAt(time) {
+        const t = Math.max(0, Math.min(time, acc - 1e-4));
+        const shot = shotAt(t);
+        const lt = t - shot.start;
+        const u = lt / shot.dur;
+        resetLayers();
+        SHOT_FN[shot.id](lt, u);
+        camera.updateProjectionMatrix();
+        camera.updateMatrixWorld(true);
+        camPos.copy(camera.position);
+        renderer.clear(true, true, true);
+        renderer.render(scene, camera);
+        // satellite layer: same camera, tight near/far, drawn over the planet
+        satCam.position.copy(camera.position);
+        satCam.quaternion.copy(camera.quaternion);
+        satCam.fov = camera.fov;
+        satCam.updateProjectionMatrix();
+        renderer.clearDepth();
+        renderer.render(satScene, satCam);
+      }
+
+      window.__hf = window.__hf || {};
+      window.__hf.buildReady = window.__hf.buildReady || {};
+      window.__hf.buildReady["stariq-broll"] = new Promise((resolve) => {
+        THREE.DefaultLoadingManager.onLoad = () => {
+          // warm shaders and env maps once everything is loaded
+          for (const s of SHOTS) renderAt(s.start + 0.5);
+          renderAt(window.__hfThreeTime || 0);
+          resolve();
+        };
+      });
+
+      window.addEventListener("hf-seek", (e) => renderAt(e.detail.time));
+      renderAt(window.__hfThreeTime || 0);
+    </script>
+  </body>
+</html>

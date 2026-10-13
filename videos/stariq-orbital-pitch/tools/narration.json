@@ -1,0 +1,23 @@
+[
+ {"id":"vo01","scene":"open","gap":1.6,"text":"Every ninety minutes, a satellite circles our planet, capturing more data than it can ever send home."},
+ {"id":"vo02","scene":"open","gap":0.45,"text":"So what if it could think for itself?"},
+ {"id":"vo03","scene":"title","gap":0.9,"speed":0.92,"text":"Star eye-cue. Intelligence, in orbit."},
+ {"id":"vo04","scene":"onboard","gap":0.9,"text":"With AI on board, a satellite sends answers, not raw data, and reacts without waiting for Earth."},
+ {"id":"vo05a","scene":"problem","gap":0.7,"text":"But space is hostile to computers."},
+ {"id":"vo05b","scene":"problem","gap":0.3,"text":"One radiation particle can change data inside an AI chip."},
+ {"id":"vo05c","scene":"problem","gap":0.3,"text":"Linux can crash."},
+ {"id":"vo05d","scene":"problem","gap":0.35,"text":"Or worse, the system keeps running, while its answer is silently wrong."},
+ {"id":"vo06","scene":"evidence","gap":0.8,"text":"Our research, published in I triple E and on NASA's website, is the first comparison of radiation-sensitive Linux components across three commercial chip platforms."},
+ {"id":"vo07","scene":"evidence","gap":0.4,"text":"The newest platform ran two to three times longer. That evidence shows us which software to protect."},
+ {"id":"vo08","scene":"solution","gap":0.8,"text":"Star eye-cue combines hardened Linux, AI protection, and automatic recovery, in one platform."},
+ {"id":"vo09","scene":"solution","gap":0.35,"text":"It keeps the operating system alive, catches corrupted AI results, restores the workload, and recovers on its own, with no operator on Earth."},
+ {"id":"vo10a","scene":"whynow","gap":0.8,"text":"And the shift to orbital AI has already begun."},
+ {"id":"vo10b","scene":"whynow","gap":0.3,"text":"Google launched a prototype AI satellite."},
+ {"id":"vo10c","scene":"whynow","gap":0.3,"text":"Starcloud flew Nvidia's H one hundred in orbit."},
+ {"id":"vo10d","scene":"whynow","gap":0.3,"text":"SpaceX has proposed up to a million orbital data-center satellites."},
+ {"id":"vo11","scene":"whynow","gap":0.4,"text":"All in a space economy heading past one trillion dollars."},
+ {"id":"vo12","scene":"business","gap":0.8,"text":"We'll sell protected AI compute modules and software licences, and fly Satellite Zero, our own pilot mission, starting with Earth observation, disaster monitoring, and communications."},
+ {"id":"vo13","scene":"team","gap":0.8,"text":"Star eye-cue is led by Doctor Saad Memon, a PhD in radiation-resilient computing, with co-founders from NASA and the European Space Agency."},
+ {"id":"vo14","scene":"ask","gap":0.8,"text":"We're raising one point five million euros, to go from prototype, to radiation validation and customer pilots, to an orbital demonstration, in twenty-four months."},
+ {"id":"vo15","scene":"close","gap":1.0,"speed":0.92,"text":"Star eye-cue. Powerful AI, built for space."}
+]

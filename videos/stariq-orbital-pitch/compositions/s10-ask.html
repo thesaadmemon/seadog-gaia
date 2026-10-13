@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #02050d;
+        }
+        .s10 {
+          position: absolute;
+          inset: 0;
+        }
+        .s10-bgwrap {
+          position: absolute;
+          inset: 0;
+        }
+        .s10-bgwrap video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .s10-shade {
+          background: linear-gradient(180deg, rgba(2, 5, 13, 0.82) 0%, rgba(2, 5, 13, 0.55) 55%, rgba(2, 5, 13, 0.9) 100%);
+        }
+        .s10-top {
+          position: absolute;
+          left: 120px;
+          top: 160px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .s10-amt {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 900;
+          font-size: 210px;
+          line-height: 1;
+          color: #eef4ff;
+          letter-spacing: 0.02em;
+          text-shadow: 0 0 60px rgba(74, 134, 255, 0.55);
+        }
+        .s10-sub {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 30px;
+          letter-spacing: 0.3em;
+          color: #5fd8ff;
+        }
+        .s10-funds {
+          position: absolute;
+          right: 120px;
+          top: 190px;
+          width: 760px;
+          padding: 30px 34px;
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+        .s10-funds .ttl {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 20px;
+          letter-spacing: 0.24em;
+          color: #a9bddc;
+        }
+        .s10-stack {
+          display: flex;
+          height: 30px;
+          width: 100%;
+          gap: 4px;
+        }
+        .s10-seg {
+          height: 100%;
+          transform-origin: 0 50%;
+        }
+        .s10-row {
+          display: grid;
+          grid-template-columns: 20px 1fr 90px 120px;
+          gap: 16px;
+          align-items: center;
+          font-family: "Manrope", sans-serif;
+          font-weight: 700;
+          font-size: 27px;
+          color: #eef4ff;
+        }
+        .s10-row i {
+          display: block;
+          width: 18px;
+          height: 18px;
+          border-radius: 3px;
+        }
+        .s10-row .p {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 900;
+          font-size: 26px;
+          text-align: right;
+        }
+        .s10-row .e {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 22px;
+          color: #a9bddc;
+          text-align: right;
+        }
+        .c1 {
+          background: #4a86ff;
+        }
+        .c2 {
+          background: #22c7ae;
+        }
+        .c3 {
+          background: #f3ac3d;
+        }
+        .s10-track {
+          position: absolute;
+          left: 0;
+          top: 560px;
+          width: 1920px;
+          height: 400px;
+        }
+        .s10-track svg {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 1920px;
+          height: 400px;
+        }
+        .s10-ms {
+          position: absolute;
+          width: 440px;
+          margin-left: -220px;
+          text-align: center;
+          opacity: 0;
+        }
+        .s10-ms .m {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 900;
+          font-size: 30px;
+          color: #5fd8ff;
+          letter-spacing: 0.06em;
+        }
+        .s10-ms .d {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 32px;
+          color: #eef4ff;
+          margin-top: 8px;
+          line-height: 1.2;
+        }
+        .s10-ms .s {
+          font-family: "Manrope", sans-serif;
+          font-size: 24px;
+          color: #a9bddc;
+          margin-top: 6px;
+        }
+        .s10-24 {
+          position: absolute;
+          right: 120px;
+          bottom: 100px;
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0.24em;
+          color: #22c7ae;
+          opacity: 0;
+        }
+        .s10-note {
+          position: absolute;
+          left: 120px;
+          bottom: 104px;
+          opacity: 0;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s10-ask" data-width="1920" data-height="1080">
+        <div class="s10">
+          <div class="s10-bgwrap" id="s10-bgwrap">
+            <video id="s10-bg" src="assets/broll/orbital.mp4" muted playsinline data-start="0" data-duration="11.45" data-media-start="68.4" data-track-index="0"></video>
+          </div>
+          <div class="scene-shade s10-shade"></div>
+
+          <div class="s10-top">
+            <div class="kicker" id="s10-kicker" data-text="THE ASK">THE ASK</div>
+            <div class="s10-amt" id="s10-amt">€0.0M</div>
+            <div class="s10-sub" id="s10-sub" data-text="SEED ROUND · 24 MONTHS">SEED ROUND · 24 MONTHS</div>
+          </div>
+
+          <div class="s10-funds panel" id="s10-funds">
+            <div class="ttl">PLANNED USE OF FUNDS</div>
+            <div class="s10-stack">
+              <div class="s10-seg c1" id="s10-s1" style="width: 45%"></div>
+              <div class="s10-seg c2" id="s10-s2" style="width: 35%"></div>
+              <div class="s10-seg c3" id="s10-s3" style="width: 20%"></div>
+            </div>
+            <div class="s10-row" id="s10-r1"><i class="c1"></i><span>Engineering</span><span class="p">45%</span><span class="e">€675k</span></div>
+            <div class="s10-row" id="s10-r2"><i class="c2"></i><span>Testing &amp; orbital demo</span><span class="p">35%</span><span class="e">€525k</span></div>
+            <div class="s10-row" id="s10-r3"><i class="c3"></i><span>Products &amp; US market</span><span class="p">20%</span><span class="e">€300k</span></div>
+          </div>
+
+          <div class="s10-track" id="s10-track">
+            <svg viewBox="0 0 1920 400">
+              <path id="s10-arc-bg" d="M 200 150 Q 960 30 1720 150" fill="none" stroke="rgba(120,170,255,0.25)" stroke-width="3" stroke-dasharray="8 10" />
+              <path id="s10-arc" d="M 200 150 Q 960 30 1720 150" fill="none" stroke="#5fd8ff" stroke-width="4" />
+              <circle id="s10-dot" cx="200" cy="150" r="12" fill="#eef4ff" />
+              <circle cx="420" cy="119" r="9" fill="#4a86ff" />
+              <circle cx="960" cy="90" r="9" fill="#22c7ae" />
+              <circle cx="1500" cy="119" r="9" fill="#f3ac3d" />
+            </svg>
+            <div class="s10-ms" id="s10-m1" style="left: 420px; top: 160px"><div class="m">MONTHS 0–6</div><div class="d">Integrated prototype</div><div class="s">Reproducible fault tests</div></div>
+            <div class="s10-ms" id="s10-m2" style="left: 960px; top: 130px"><div class="m">MONTHS 6–15</div><div class="d">Radiation validation</div><div class="s">Customer pilots</div></div>
+            <div class="s10-ms" id="s10-m3" style="left: 1500px; top: 160px"><div class="m">MONTHS 15–24</div><div class="d">Orbital demonstration</div><div class="s">First commercial contracts</div></div>
+          </div>
+          <div class="srcnote s10-note" id="s10-note">PLANNED MILESTONES · ORBITAL SCOPE AND TIMING DEPEND ON MISSION COST, QUALIFICATION AND LAUNCH ACCESS</div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 106.3;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          tl.fromTo("#s10-bgwrap", { scale: 1.0 }, { scale: 1.07, duration: 11.45, ease: "none" }, 0);
+
+          // "We're raising one point five million euros,"
+          SQ.scramble(tl, q("#s10-kicker"), 0.05, 0.5, 101);
+          tl.fromTo("#s10-amt", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5, ease: "expo.out", transformOrigin: "0% 50%" }, at("vo14", 0) - 0.05);
+          SQ.count(tl, q("#s10-amt"), 0, 1.5, at("vo14", 0) + 0.1, 1.9, (v) => "€" + v.toFixed(1) + "M", "power3.out");
+          SQ.scramble(tl, q("#s10-sub"), at("vo14", 0) + 1.4, 0.7, 102);
+          tl.fromTo("#s10-funds", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, at("vo14", 0) + 1.9);
+          ["#s10-s1", "#s10-s2", "#s10-s3"].forEach((s, i) => tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, at("vo14", 0) + 2.2 + i * 0.25));
+          tl.fromTo(["#s10-r1", "#s10-r2", "#s10-r3"], { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out", stagger: 0.25 }, at("vo14", 0) + 2.3);
+
+          // milestone arc: the dot reaches each milestone on its phrase
+          const path = q("#s10-arc");
+          const len = path.getTotalLength();
+          const dot = q("#s10-dot");
+          const prog = { p: 0 };
+          const draw = () => {
+            const pt = path.getPointAtLength(len * prog.p);
+            dot.setAttribute("cx", pt.x);
+            dot.setAttribute("cy", pt.y);
+            path.setAttribute("stroke-dasharray", len + " " + len);
+            path.setAttribute("stroke-dashoffset", String(len * (1 - prog.p)));
+          };
+          draw();
+          const ms = [
+            [at("vo14", 1), 0.145, "#s10-m1"],
+            [at("vo14", 2), 0.5, "#s10-m2"],
+            [at("vo14", 3), 0.855, "#s10-m3"],
+          ];
+          let prev = [at("vo14", 1) - 0.8, 0];
+          ms.forEach(([t, p, el]) => {
+            tl.fromTo(prog, { p: prev[1] }, { p, duration: t + 0.3 - prev[0], ease: "power2.inOut", onUpdate: draw }, prev[0]);
+            tl.fromTo(el, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.8)" }, t + 0.15);
+            prev = [t + 0.3, p];
+          });
+          tl.fromTo(prog, { p: 0.855 }, { p: 1, duration: 1.0, ease: "power2.out", onUpdate: draw }, at("vo14", 4));
+          tl.fromTo("#s10-note", { opacity: 0 }, { opacity: 1, duration: 0.6 }, at("vo14", 4));
+
+          tl.to(".s10", { opacity: 0, duration: 0.3, ease: "power2.in" }, 11.15);
+
+          window.__timelines["s10-ask"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

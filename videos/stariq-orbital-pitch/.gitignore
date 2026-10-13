@@ -1,0 +1,8 @@
+# HyperFrames working state and render scratch
+.hyperframes/
+broll/.hyperframes/
+assets/broll/work-*/
+assets/broll/.*-transaction-*/
+node_modules/
+# pre-master narration takes (regenerate with tools/tts.py)
+assets/audio/vo_raw/

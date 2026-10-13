@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #02050d;
+        }
+        .s08 {
+          position: absolute;
+          inset: 0;
+        }
+        .s08-bgwrap {
+          position: absolute;
+          inset: 0;
+        }
+        .s08-bgwrap video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .s08-shade {
+          background: linear-gradient(90deg, rgba(2, 5, 13, 0.94) 0%, rgba(2, 5, 13, 0.82) 38%, rgba(2, 5, 13, 0.25) 62%, rgba(2, 5, 13, 0.1) 100%), linear-gradient(0deg, rgba(2, 5, 13, 0.85) 0%, rgba(2, 5, 13, 0) 30%);
+        }
+        .s08-left {
+          position: absolute;
+          left: 120px;
+          top: 160px;
+          width: 980px;
+          display: flex;
+          flex-direction: column;
+          gap: 22px;
+        }
+        .s08-h1 {
+          font-size: 66px;
+        }
+        .s08-rows {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-top: 10px;
+        }
+        .s08-row {
+          display: grid;
+          grid-template-columns: 82px 150px 1fr;
+          align-items: center;
+          gap: 24px;
+          padding: 16px 24px;
+        }
+        .s08-row .num {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 900;
+          font-size: 44px;
+          color: #4a86ff;
+        }
+        .s08-row .th {
+          width: 150px;
+          height: 90px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .s08-row .th img {
+          max-width: 150px;
+          max-height: 90px;
+          display: block;
+        }
+        .s08-row .th .code {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 22px;
+          color: #22c7ae;
+          border: 2px solid rgba(34, 199, 174, 0.6);
+          padding: 10px 12px;
+          border-radius: 6px;
+          background: rgba(34, 199, 174, 0.1);
+        }
+        .s08-row .nm {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 36px;
+          color: #eef4ff;
+        }
+        .s08-row .ds {
+          font-family: "Manrope", sans-serif;
+          font-size: 24px;
+          color: #a9bddc;
+          margin-top: 4px;
+        }
+        .s08-markets {
+          position: absolute;
+          left: 120px;
+          right: 120px;
+          bottom: 120px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .s08-mlabel {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 21px;
+          letter-spacing: 0.26em;
+          color: #a9bddc;
+        }
+        .s08-pills {
+          display: flex;
+          gap: 22px;
+        }
+        .s08-pill {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 18px 30px;
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 34px;
+          color: #eef4ff;
+          border-radius: 60px;
+          border: 2px solid rgba(95, 160, 255, 0.45);
+          background: rgba(6, 16, 40, 0.75);
+        }
+        .s08-pill i {
+          display: block;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: #5fd8ff;
+          box-shadow: 0 0 14px #5fd8ff;
+        }
+        .s08-tag {
+          position: absolute;
+          right: 140px;
+          top: 160px;
+          text-align: right;
+          font-family: "JetBrains Mono", monospace;
+          font-size: 20px;
+          letter-spacing: 0.18em;
+          color: #eef4ff;
+          line-height: 1.7;
+          opacity: 0;
+        }
+        .s08-tag b {
+          color: #5fd8ff;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s08-business" data-width="1920" data-height="1080">
+        <div class="s08">
+          <div class="s08-bgwrap" id="s08-bgwrap">
+            <video id="s08-bg" src="assets/broll/orbital.mp4" muted playsinline data-start="0" data-duration="12.3" data-media-start="46" data-playback-rate="0.976" data-track-index="0"></video>
+          </div>
+          <div class="scene-shade s08-shade"></div>
+          <div class="s08-tag" id="s08-tag"><b>● EO PASS</b> · SENSOR FOOTPRINT<div>ONBOARD AI TRIAGE</div></div>
+
+          <div class="s08-left" id="s08-left">
+            <div class="kicker" id="s08-kicker" data-text="THE BUSINESS">THE BUSINESS</div>
+            <h1 class="headline s08-h1" id="s08-h1">Built for satellite builders <span class="accent">&amp; integrators.</span></h1>
+            <div class="s08-rows">
+              <div class="s08-row panel" id="s08-r1">
+                <div class="num">01</div>
+                <div class="th"><img src="assets/img/chip-ai-concept.png" alt="Protected AI compute module" /></div>
+                <div><div class="nm">Compute modules</div><div class="ds">Protected AI boards for customer satellites</div></div>
+              </div>
+              <div class="s08-row panel" id="s08-r2">
+                <div class="num">02</div>
+                <div class="th"><span class="code">&lt;/LINUX&gt;</span></div>
+                <div><div class="nm">Software licences</div><div class="ds">Linux protection and recovery for customer hardware</div></div>
+              </div>
+              <div class="s08-row panel" id="s08-r3">
+                <div class="num">03</div>
+                <div class="th"><img src="assets/img/sat-ai-concept.png" alt="Satellite Zero" /></div>
+                <div><div class="nm">Satellite Zero</div><div class="ds">A complete AI satellite for pilot missions</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="s08-markets" id="s08-markets">
+            <div class="s08-mlabel" id="s08-ml" data-text="START WHERE THE NEED IS CONCRETE">START WHERE THE NEED IS CONCRETE</div>
+            <div class="s08-pills">
+              <div class="s08-pill" id="s08-p1"><i></i>Earth observation</div>
+              <div class="s08-pill" id="s08-p2"><i></i>Disaster monitoring</div>
+              <div class="s08-pill" id="s08-p3"><i></i>Communications</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 83.6;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          tl.fromTo("#s08-bgwrap", { scale: 1.0 }, { scale: 1.06, duration: 12.3, ease: "none" }, 0);
+          tl.fromTo("#s08-tag", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 1.0);
+
+          SQ.scramble(tl, q("#s08-kicker"), 0.1, 0.6, 81);
+          const wh = SQ.splitWords(q("#s08-h1"));
+          tl.fromTo(wh, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out", stagger: 0.06 }, 0.15);
+
+          // "We'll sell protected AI compute modules and software licences, / and fly Satellite Zero, ..."
+          tl.fromTo("#s08-r1", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, at("vo12", 0) + 1.0);
+          tl.fromTo("#s08-r2", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, at("vo12", 0) + 2.55);
+          tl.fromTo("#s08-r3", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, at("vo12", 1) + 0.25);
+          tl.fromTo("#s08-r3 img", { rotation: -8, scale: 0.9 }, { rotation: 4, scale: 1.05, duration: 3, ease: "sine.inOut" }, at("vo12", 1) + 0.25);
+
+          // "starting with Earth observation, / disaster monitoring, / and communications."
+          SQ.scramble(tl, q("#s08-ml"), at("vo12", 3) - 0.6, 0.7, 82);
+          [["#s08-p1", 3], ["#s08-p2", 4], ["#s08-p3", 5]].forEach(([p, k]) => {
+            tl.fromTo(p, { opacity: 0, y: 30, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(2)" }, at("vo12", k) + 0.05);
+            tl.fromTo(p, { borderColor: "#5fd8ff" }, { borderColor: "rgba(95,160,255,0.45)", duration: 1.0 }, at("vo12", k) + 0.5);
+          });
+
+          tl.to(".s08", { opacity: 0, duration: 0.3, ease: "power2.in" }, 12.0);
+
+          window.__timelines["s08-business"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .s02 {
+          position: absolute;
+          inset: 0;
+        }
+        .s02-bgwrap {
+          position: absolute;
+          inset: 0;
+          transform-origin: 50% 70%;
+        }
+        .s02-bgwrap video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .s02-shade {
+          background: radial-gradient(ellipse at 50% 38%, rgba(2, 6, 16, 0.55) 0%, rgba(2, 6, 16, 0) 60%);
+        }
+        .s02-lockup {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 225px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 26px;
+        }
+        .s02-kicker {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0.5em;
+          color: #a9d9ff;
+        }
+        .s02-word {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 900;
+          font-size: 214px;
+          line-height: 1;
+          letter-spacing: 0.1em;
+          color: #f4f8ff;
+          text-shadow: 0 0 50px rgba(120, 170, 255, 0.45);
+          padding-left: 0.1em;
+        }
+        .s02-word .iq {
+          color: #4a86ff;
+          text-shadow: 0 0 60px rgba(74, 134, 255, 0.8);
+        }
+        .s02-rule {
+          display: flex;
+          align-items: center;
+          gap: 28px;
+        }
+        .s02-bar {
+          width: 260px;
+          height: 3px;
+          background: linear-gradient(90deg, rgba(95, 216, 255, 0), #5fd8ff);
+        }
+        .s02-bar.r {
+          background: linear-gradient(90deg, #5fd8ff, rgba(95, 216, 255, 0));
+        }
+        .s02-tag {
+          font-family: "Manrope", sans-serif;
+          font-weight: 700;
+          font-size: 40px;
+          letter-spacing: 0.42em;
+          color: #eef4ff;
+          white-space: nowrap;
+        }
+        .s02-sweep {
+          position: absolute;
+          top: 300px;
+          left: 0;
+          width: 260px;
+          height: 300px;
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+          mix-blend-mode: overlay;
+          filter: blur(10px);
+        }
+      </style>
+
+      <div id="root" data-composition-id="s02-title" data-width="1920" data-height="1080">
+        <div class="s02">
+          <div class="s02-bgwrap" id="s02-bgwrap">
+            <video id="s02-bg" src="assets/broll/orbital.mp4" muted playsinline data-start="0" data-duration="2.9" data-media-start="10.1" data-track-index="0"></video>
+          </div>
+          <div class="scene-shade s02-shade"></div>
+          <div class="s02-lockup" id="s02-lockup">
+            <div class="s02-kicker" id="s02-kicker" data-text="AI SATELLITES · SPACE DATA CENTERS">AI SATELLITES · SPACE DATA CENTERS</div>
+            <div class="s02-word" id="s02-word"><span id="s02-star">STAR</span><span class="iq" id="s02-iq">IQ</span></div>
+            <div class="s02-rule">
+              <div class="s02-bar" id="s02-bar-l"></div>
+              <div class="s02-tag" id="s02-tag">INTELLIGENCE, IN ORBIT.</div>
+              <div class="s02-bar r" id="s02-bar-r"></div>
+            </div>
+          </div>
+          <div class="s02-sweep" id="s02-sweep"></div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 10.1;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          tl.fromTo("#s02-bgwrap", { scale: 1.07 }, { scale: 1.1, duration: 2.9, ease: "none" }, 0);
+
+          // wordmark: letters converge out of the flash
+          const chars = SQ.splitChars(q("#s02-star")).concat(SQ.splitChars(q("#s02-iq")));
+          tl.fromTo(
+            chars,
+            { opacity: 0, scale: 1.9, filter: "blur(24px)", y: -10 },
+            { opacity: 1, scale: 1, filter: "blur(0px)", y: 0, duration: 0.7, ease: "expo.out", stagger: { each: 0.045, from: "center" } },
+            0.02,
+          );
+          tl.fromTo("#s02-sweep", { x: 240, opacity: 0 }, { x: 1500, opacity: 1, duration: 0.9, ease: "power2.inOut" }, 0.45);
+          tl.to("#s02-sweep", { opacity: 0, duration: 0.2 }, 1.36);
+          SQ.scramble(tl, q("#s02-kicker"), 0.25, 0.8, 21);
+
+          // "Intelligence, in orbit."
+          tl.fromTo(["#s02-bar-l", "#s02-bar-r"], { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power3.out" }, at("vo03", 1) - 0.35);
+          tl.set("#s02-bar-l", { transformOrigin: "100% 50%" }, 0);
+          tl.set("#s02-bar-r", { transformOrigin: "0% 50%" }, 0);
+          tl.fromTo("#s02-tag", { opacity: 0, scale: 1.18, filter: "blur(8px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }, at("vo03", 1) - 0.1);
+
+          // hand-off to the onboard-AI shot
+          tl.to("#s02-lockup", { opacity: 0, y: -40, filter: "blur(12px)", duration: 0.35, ease: "power2.in" }, 2.55);
+
+          window.__timelines["s02-title"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

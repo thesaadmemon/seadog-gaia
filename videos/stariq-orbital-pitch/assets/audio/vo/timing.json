@@ -1,0 +1,175 @@
+{
+ "voice": "af_heart",
+ "speed": 1.05,
+ "total": 124.58,
+ "lines": [
+  {
+   "id": "vo01",
+   "scene": "open",
+   "start": 1.6,
+   "dur": 5.739,
+   "end": 7.339,
+   "text": "Every ninety minutes, a satellite circles our planet, capturing more data than it can ever send home."
+  },
+  {
+   "id": "vo02",
+   "scene": "open",
+   "start": 7.789,
+   "dur": 1.643,
+   "end": 9.431,
+   "text": "So what if it could think for itself?"
+  },
+  {
+   "id": "vo03",
+   "scene": "title",
+   "start": 10.331,
+   "dur": 2.688,
+   "end": 13.019,
+   "text": "Star eye-cue. Intelligence, in orbit."
+  },
+  {
+   "id": "vo04",
+   "scene": "onboard",
+   "start": 13.919,
+   "dur": 5.952,
+   "end": 19.871,
+   "text": "With AI on board, a satellite sends answers, not raw data, and reacts without waiting for Earth."
+  },
+  {
+   "id": "vo05a",
+   "scene": "problem",
+   "start": 20.571,
+   "dur": 2.005,
+   "end": 22.577,
+   "text": "But space is hostile to computers."
+  },
+  {
+   "id": "vo05b",
+   "scene": "problem",
+   "start": 22.877,
+   "dur": 3.968,
+   "end": 26.845,
+   "text": "One radiation particle can change data inside an AI chip."
+  },
+  {
+   "id": "vo05c",
+   "scene": "problem",
+   "start": 27.145,
+   "dur": 1.109,
+   "end": 28.254,
+   "text": "Linux can crash."
+  },
+  {
+   "id": "vo05d",
+   "scene": "problem",
+   "start": 28.604,
+   "dur": 3.776,
+   "end": 32.38,
+   "text": "Or worse, the system keeps running, while its answer is silently wrong."
+  },
+  {
+   "id": "vo06",
+   "scene": "evidence",
+   "start": 33.18,
+   "dur": 10.069,
+   "end": 43.249,
+   "text": "Our research, published in I triple E and on NASA's website, is the first comparison of radiation-sensitive Linux components across three commercial chip platforms."
+  },
+  {
+   "id": "vo07",
+   "scene": "evidence",
+   "start": 43.649,
+   "dur": 5.568,
+   "end": 49.217,
+   "text": "The newest platform ran two to three times longer. That evidence shows us which software to protect."
+  },
+  {
+   "id": "vo08",
+   "scene": "solution",
+   "start": 50.017,
+   "dur": 6.272,
+   "end": 56.289,
+   "text": "Star eye-cue combines hardened Linux, AI protection, and automatic recovery, in one platform."
+  },
+  {
+   "id": "vo09",
+   "scene": "solution",
+   "start": 56.639,
+   "dur": 8.939,
+   "end": 65.578,
+   "text": "It keeps the operating system alive, catches corrupted AI results, restores the workload, and recovers on its own, with no operator on Earth."
+  },
+  {
+   "id": "vo10a",
+   "scene": "whynow",
+   "start": 66.378,
+   "dur": 2.667,
+   "end": 69.045,
+   "text": "And the shift to orbital AI has already begun."
+  },
+  {
+   "id": "vo10b",
+   "scene": "whynow",
+   "start": 69.345,
+   "dur": 2.496,
+   "end": 71.841,
+   "text": "Google launched a prototype AI satellite."
+  },
+  {
+   "id": "vo10c",
+   "scene": "whynow",
+   "start": 72.141,
+   "dur": 2.987,
+   "end": 75.127,
+   "text": "Starcloud flew Nvidia's H one hundred in orbit."
+  },
+  {
+   "id": "vo10d",
+   "scene": "whynow",
+   "start": 75.427,
+   "dur": 4.032,
+   "end": 79.459,
+   "text": "SpaceX has proposed up to a million orbital data-center satellites."
+  },
+  {
+   "id": "vo11",
+   "scene": "whynow",
+   "start": 79.859,
+   "dur": 3.307,
+   "end": 83.166,
+   "text": "All in a space economy heading past one trillion dollars."
+  },
+  {
+   "id": "vo12",
+   "scene": "business",
+   "start": 83.966,
+   "dur": 11.499,
+   "end": 95.465,
+   "text": "We'll sell protected AI compute modules and software licences, and fly Satellite Zero, our own pilot mission, starting with Earth observation, disaster monitoring, and communications."
+  },
+  {
+   "id": "vo13",
+   "scene": "team",
+   "start": 96.265,
+   "dur": 9.6,
+   "end": 105.865,
+   "text": "Star eye-cue is led by Doctor Saad Memon, a PhD in radiation-resilient computing, with co-founders from NASA and the European Space Agency."
+  },
+  {
+   "id": "vo14",
+   "scene": "ask",
+   "start": 106.665,
+   "dur": 10.475,
+   "end": 117.139,
+   "text": "We're raising one point five million euros, to go from prototype, to radiation validation and customer pilots, to an orbital demonstration, in twenty-four months."
+  },
+  {
+   "id": "vo15",
+   "scene": "close",
+   "start": 118.139,
+   "dur": 3.243,
+   "end": 121.382,
+   "text": "Star eye-cue. Powerful AI, built for space."
+  }
+ ]
+}

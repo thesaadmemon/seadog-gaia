@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #02050d;
+        }
+        .s07 {
+          position: absolute;
+          inset: 0;
+        }
+        .s07-bgwrap {
+          position: absolute;
+          inset: 0;
+        }
+        .s07-bgwrap video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .s07-shade {
+          background: linear-gradient(90deg, rgba(2, 5, 13, 0.92) 0%, rgba(2, 5, 13, 0.7) 32%, rgba(2, 5, 13, 0) 55%);
+        }
+        .s07-left {
+          position: absolute;
+          left: 120px;
+          top: 160px;
+          width: 860px;
+          display: flex;
+          flex-direction: column;
+          gap: 22px;
+        }
+        .s07-h1 {
+          font-size: 70px;
+        }
+        .s07-cards {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+          margin-top: 18px;
+        }
+        .s07-card {
+          display: grid;
+          grid-template-columns: 210px 1fr;
+          align-items: center;
+          gap: 26px;
+          padding: 22px 26px;
+        }
+        .s07-logo {
+          height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.95);
+          border-radius: 6px;
+          padding: 0 16px;
+        }
+        .s07-logo img {
+          max-width: 100%;
+          max-height: 40px;
+          display: block;
+        }
+        .s07-logo.dark {
+          background: #000;
+          border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .s07-logo.sc {
+          background: linear-gradient(135deg, #1b2a4d, #0b1430);
+          border: 2px solid rgba(255, 255, 255, 0.22);
+          font-family: "Orbitron", sans-serif;
+          font-weight: 700;
+          font-size: 26px;
+          letter-spacing: 0.12em;
+          color: #eef4ff;
+        }
+        .s07-card .tx {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 31px;
+          color: #eef4ff;
+          line-height: 1.2;
+        }
+        .s07-card .tx small {
+          display: block;
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 400;
+          font-size: 18px;
+          letter-spacing: 0.14em;
+          color: #a9bddc;
+          margin-top: 8px;
+        }
+        .s07-count {
+          position: absolute;
+          right: 140px;
+          top: 150px;
+          text-align: right;
+          opacity: 0;
+        }
+        .s07-count .n {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 900;
+          font-size: 96px;
+          color: #eef4ff;
+          text-shadow: 0 0 40px rgba(74, 134, 255, 0.6);
+        }
+        .s07-count .l {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 20px;
+          letter-spacing: 0.2em;
+          color: #5fd8ff;
+        }
+        .s07-market {
+          position: absolute;
+          left: 120px;
+          top: 300px;
+          width: 940px;
+          padding: 40px 44px;
+          display: flex;
+          flex-direction: column;
+          gap: 26px;
+          opacity: 0;
+        }
+        .s07-market .ttl {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0.24em;
+          color: #5fd8ff;
+        }
+        .s07-mrow {
+          display: grid;
+          grid-template-columns: 120px 1fr;
+          align-items: center;
+          gap: 22px;
+        }
+        .s07-mrow .yr {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 700;
+          font-size: 30px;
+          color: #a9bddc;
+        }
+        .s07-mbar {
+          height: 74px;
+          display: flex;
+          align-items: center;
+          padding-left: 22px;
+          transform-origin: 0 50%;
+          font-family: "Orbitron", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          color: #040a17;
+        }
+        .s07-mbar.a {
+          width: 62%;
+          background: #8fb3ef;
+        }
+        .s07-mbar.b {
+          width: 100%;
+          background: #4a86ff;
+          color: #eef4ff;
+          box-shadow: 0 0 40px rgba(74, 134, 255, 0.55);
+        }
+        .s07-big {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 50px;
+          color: #eef4ff;
+          line-height: 1.15;
+        }
+        .s07-big span {
+          color: #4a86ff;
+        }
+        .s07-src {
+          position: absolute;
+          left: 120px;
+          bottom: 104px;
+          opacity: 0;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s07-whynow" data-width="1920" data-height="1080">
+        <div class="s07">
+          <div class="s07-bgwrap" id="s07-bgwrap">
+            <video id="s07-bg" src="assets/broll/orbital.mp4" muted playsinline data-start="0" data-duration="17.6" data-media-start="30" data-playback-rate="0.91" data-track-index="0"></video>
+          </div>
+          <div class="scene-shade s07-shade"></div>
+
+          <div class="s07-left" id="s07-left">
+            <div class="kicker" id="s07-kicker" data-text="WHY NOW">WHY NOW</div>
+            <h1 class="headline s07-h1" id="s07-h1">The shift to orbital AI has <span class="accent">already begun.</span></h1>
+            <div class="s07-cards">
+              <div class="s07-card panel" id="s07-c1">
+                <div class="s07-logo"><img src="assets/img/google-logo.svg" alt="Google" /></div>
+                <div class="tx">Launched a prototype AI satellite<small>[2] GOOGLE · 2026</small></div>
+              </div>
+              <div class="s07-card panel" id="s07-c2">
+                <div class="s07-logo sc">STARCLOUD</div>
+                <div class="tx">Flew NVIDIA’s H100 data-center GPU in orbit<small>[3] STARCLOUD · NOV 2025</small></div>
+              </div>
+              <div class="s07-card panel" id="s07-c3">
+                <div class="s07-logo dark"><img src="assets/img/spacex-wordmark.png" alt="SpaceX" /></div>
+                <div class="tx">Proposes up to 1,000,000 orbital data-center satellites<small>[4] FCC APPLICATION</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="s07-count" id="s07-count">
+            <div class="n" id="s07-n">0</div>
+            <div class="l">PROPOSED ORBITAL DATA-CENTER SATELLITES</div>
+          </div>
+
+          <div class="s07-market panel" id="s07-market">
+            <div class="ttl" id="s07-mt" data-text="GLOBAL SPACE ECONOMY">GLOBAL SPACE ECONOMY</div>
+            <div class="s07-mrow"><div class="yr">2025</div><div class="s07-mbar a" id="s07-ma">$626.4B</div></div>
+            <div class="s07-mrow"><div class="yr">2034</div><div class="s07-mbar b" id="s07-mb"><span id="s07-mbn">$0.00T</span></div></div>
+            <div class="s07-big">Heading past <span>one trillion dollars.</span></div>
+          </div>
+          <div class="srcnote s07-src" id="s07-src">[5] NOVASPACE — SAME DEFINITION BOTH YEARS · STARIQ TARGETS PROTECTED AI COMPUTING WITHIN IT</div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 66.0;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          // push the globe right so the left column reads clean
+          tl.fromTo("#s07-bgwrap", { x: 300, scale: 1.04 }, { x: 240, scale: 1.1, duration: 17.6, ease: "none" }, 0);
+
+          // "And the shift to orbital AI has already begun."
+          SQ.scramble(tl, q("#s07-kicker"), 0.1, 0.5, 71);
+          const wh = SQ.splitWords(q("#s07-h1"));
+          tl.fromTo(wh, { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out", stagger: 0.07 }, at("vo10a", 0) - 0.05);
+
+          // the three signals, each on its sentence
+          [["#s07-c1", "vo10b"], ["#s07-c2", "vo10c"], ["#s07-c3", "vo10d"]].forEach(([c, id]) => {
+            tl.fromTo(c, { opacity: 0, x: -70 }, { opacity: 1, x: 0, duration: 0.55, ease: "expo.out" }, at(id, 0) - 0.1);
+            tl.fromTo(c, { borderColor: "#5fd8ff" }, { borderColor: "rgba(95,160,255,0.42)", duration: 1.2 }, at(id, 0) + 0.5);
+          });
+          tl.fromTo("#s07-count", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, at("vo10d", 0) + 0.3);
+          SQ.count(tl, q("#s07-n"), 0, 1000000, at("vo10d", 0) + 0.3, 3.0, (v) => Math.round(v).toLocaleString("en-US"), "power2.out");
+
+          // "All in a space economy heading past one trillion dollars."
+          const tM = at("vo11", 0);
+          tl.to(["#s07-left", "#s07-count"], { opacity: 0, y: -30, duration: 0.4, ease: "power2.in" }, tM - 0.45);
+          tl.fromTo("#s07-market", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, tM - 0.15);
+          SQ.scramble(tl, q("#s07-mt"), tM, 0.6, 72);
+          tl.fromTo("#s07-ma", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power3.out" }, tM + 0.3);
+          tl.fromTo("#s07-mb", { scaleX: 0 }, { scaleX: 1, duration: 1.6, ease: "power3.out" }, tM + 0.7);
+          SQ.count(tl, q("#s07-mbn"), 0, 1.01, tM + 0.7, 1.6, (v) => "$" + v.toFixed(2) + "T", "power3.out");
+          tl.fromTo("#s07-src", { opacity: 0 }, { opacity: 1, duration: 0.6 }, tM + 1.0);
+
+          tl.to(".s07", { opacity: 0, duration: 0.3, ease: "power2.in" }, 17.3);
+
+          window.__timelines["s07-whynow"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

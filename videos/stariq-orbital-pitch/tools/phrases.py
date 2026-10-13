@@ -1,0 +1,67 @@
+"""Phrase timing from the narration clips' own pauses.
+
+usage: python phrases.py assets/audio/vo/timing.json assets/audio/vo out.json
+
+Kokoro leaves a short silence at each comma / full stop. For every line we split
+the text at punctuation, find the silent gaps in its wav, and match each phrase
+boundary to the gap nearest its character-proportional estimate. Output: every
+phrase with absolute start/end on the master timeline — the cue sheet the scenes
+animate to.
+"""
+import json
+import re
+import sys
+
+import numpy as np
+import soundfile as sf
+
+timing = json.load(open(sys.argv[1]))
+wav_dir = sys.argv[2]
+out = {}
+for ln in timing['lines']:
+    x, sr = sf.read(f"{wav_dir}/{ln['id']}.wav")
+    if x.ndim > 1:
+        x = x.mean(axis=1)
+    hop = int(0.01 * sr)
+    frames = len(x) // hop
+    rms = np.array([np.sqrt(np.mean(x[i * hop:(i + 1) * hop] ** 2)) for i in range(frames)])
+    thr = max(rms.max() * 0.04, 1e-4)
+    quiet = rms < thr
+    gaps = []
+    i = 0
+    while i < frames:
+        if quiet[i]:
+            j = i
+            while j < frames and quiet[j]:
+                j += 1
+            if (j - i) >= 7 and i > 3 and j < frames - 3:  # >= 70 ms, interior
+                gaps.append(((i + j) / 2 * hop / sr, (j - i) * hop / sr))
+            i = j
+        else:
+            i += 1
+    parts = [p.strip() for p in re.split(r'(?<=[,.?!;:])\s+', ln['text']) if p.strip()]
+    total_chars = sum(len(p) for p in parts)
+    dur = ln['dur']
+    bounds = []
+    acc = 0
+    used = set()
+    for p in parts[:-1]:
+        acc += len(p)
+        est = dur * acc / total_chars
+        cands = [(abs(g[0] - est), k) for k, g in enumerate(gaps) if k not in used and abs(g[0] - est) < 1.2]
+        if cands:
+            _, k = min(cands)
+            used.add(k)
+            bounds.append(gaps[k][0])
+        else:
+            bounds.append(est)
+    bounds = sorted(bounds)
+    edges = [0.0] + bounds + [dur]
+    out[ln['id']] = [
+        {'text': p, 'start': round(ln['start'] + edges[k], 2), 'end': round(ln['start'] + edges[k + 1], 2)}
+        for k, p in enumerate(parts)
+    ]
+json.dump(out, open(sys.argv[3], 'w'), indent=1)
+for k, v in out.items():
+    for ph in v:
+        print(f"{k:6s} {ph['start']:7.2f}-{ph['end']:7.2f}  {ph['text']}")
