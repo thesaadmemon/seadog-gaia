@@ -8,11 +8,11 @@ Everything is reproducible from this folder.
 | `index.html` | Root composition: scene slots, mission HUD, grain, narration / score / SFX mix |
 | `compositions/s01…s11-*.html` | One sub-composition per story beat |
 | `broll/index.html` | Three.js orbital b-roll (Earth, atmosphere, Landsat 8, constellation) |
-| `assets/broll/orbital.mp4` | Rendered b-roll used as scene backgrounds |
+| `assets/broll/orbital.mp4` | Rendered b-roll used as scene backgrounds (re-encoded CRF 19 to stay under GitHub's file limit) |
 | `assets/audio/vo/` | Narration clips + `timing.json` |
 | `assets/audio/score.wav` | Procedural techno-space score |
 | `tools/` | `tts.py` (Kokoro narration), `phrases.py` (cue sheet), `score.py` (music) |
-| `renders/` | Draft and final MP4s |
+| `renders/` | `stariq-pitch-draft-v1.mp4` (first cut) and `stariq-pitch-final.mp4` (after the edit pass, see `EDIT_NOTES.md`) |
 
 ## Rebuild
 
@@ -20,7 +20,12 @@ Everything is reproducible from this folder.
 # narration (local Kokoro; needs kokoro-onnx + soundfile in the python env)
 python tools/tts.py tools/narration.json assets/audio/vo_raw af_heart 1.05 3.2
 # master each clip (EQ, compression, -16 LUFS), then the phrase cue sheet
-python tools/phrases.py assets/audio/vo/timing.json assets/audio/vo tools/cues.json
+for f in assets/audio/vo_raw/vo*.wav; do
+  ffmpeg -y -i "$f" -af "highpass=f=75,equalizer=f=220:t=q:w=1.2:g=-1.5,equalizer=f=3800:t=q:w=1.0:g=2.5,acompressor=threshold=-21dB:ratio=2.8:attack=6:release=90:makeup=2,loudnorm=I=-16:TP=-1.5:LRA=7,aresample=48000" \
+    -ar 48000 -ac 1 "assets/audio/vo/$(basename "$f")"
+done
+cp assets/audio/vo_raw/timing.json assets/audio/vo/
+python tools/phrases.py assets/audio/vo/timing.json assets/audio/vo tools/cues.json assets/js/cues.js
 # score, written to the same timing
 python tools/score.py assets/audio/score.wav 124.6
 # b-roll, then the film

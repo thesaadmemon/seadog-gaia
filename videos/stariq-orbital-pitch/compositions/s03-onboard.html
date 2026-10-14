@@ -27,7 +27,7 @@
           display: block;
         }
         .s03-shade {
-          background: linear-gradient(90deg, rgba(2, 6, 16, 0.82) 0%, rgba(2, 6, 16, 0.55) 34%, rgba(2, 6, 16, 0) 58%);
+          background: radial-gradient(ellipse 72% 90% at 0% 100%, rgba(2, 6, 16, 0.9) 0%, rgba(2, 6, 16, 0.78) 45%, rgba(2, 6, 16, 0) 100%);
         }
         .s03-svg {
           position: absolute;
@@ -39,9 +39,9 @@
           position: absolute;
           left: 0;
           top: 0;
-          width: 230px;
-          height: 230px;
-          margin: -115px 0 0 -115px;
+          width: 190px;
+          height: 190px;
+          margin: -95px 0 0 -95px;
         }
         .s03-reticle i {
           position: absolute;
@@ -75,8 +75,11 @@
         }
         .s03-tag {
           position: absolute;
-          left: 250px;
-          top: 6px;
+          right: 40px;
+          top: 206px;
+          padding: 10px 16px;
+          background: rgba(4, 10, 24, 0.78);
+          border: 2px solid rgba(95, 216, 255, 0.5);
           white-space: nowrap;
           font-family: "JetBrains Mono", monospace;
           font-size: 19px;
@@ -90,8 +93,8 @@
         .s03-copy {
           position: absolute;
           left: 120px;
-          top: 250px;
-          width: 800px;
+          bottom: 140px;
+          width: 720px;
           display: flex;
           flex-direction: column;
           gap: 26px;
@@ -167,19 +170,20 @@
 
           <svg class="s03-svg" viewBox="0 0 1920 1080">
             <defs>
-              <linearGradient id="s03-beam-g" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#5fd8ff" stop-opacity="0.95" />
-                <stop offset="1" stop-color="#5fd8ff" stop-opacity="0.1" />
-              </linearGradient>
+              <radialGradient id="s03-glow-g" cx="50%" cy="50%" r="50%">
+                <stop offset="0" stop-color="#bff0ff" stop-opacity="0.95" />
+                <stop offset="0.35" stop-color="#5fd8ff" stop-opacity="0.55" />
+                <stop offset="1" stop-color="#5fd8ff" stop-opacity="0" />
+              </radialGradient>
             </defs>
             <line id="s03-beam" x1="1200" y1="300" x2="760" y2="1010" stroke="#5fd8ff" stroke-width="3" stroke-dasharray="10 12" opacity="0" />
-            <circle id="s03-packet" cx="1200" cy="300" r="10" fill="#eef4ff" opacity="0" />
-            <circle id="s03-packet-glow" cx="1200" cy="300" r="26" fill="#5fd8ff" opacity="0" />
+            <circle id="s03-packet" cx="1200" cy="300" r="7" fill="#ffffff" opacity="0" />
+            <circle id="s03-packet-glow" cx="1200" cy="300" r="34" fill="url(#s03-glow-g)" opacity="0" />
           </svg>
 
           <div class="s03-reticle" id="s03-reticle">
             <i></i><i></i><i></i><i></i>
-            <div class="s03-tag" id="s03-tag">EARTH-OBSERVATION SATELLITE<br />AI ONBOARD <b>● ACTIVE</b></div>
+            <div class="s03-tag" id="s03-tag"><div>EARTH-OBSERVATION SATELLITE</div><div>AI ONBOARD <b>● ACTIVE</b></div></div>
           </div>
 
           <div class="s03-copy" id="s03-copy">
@@ -187,7 +191,7 @@
             <h1 class="headline" id="s03-h">AI on board.</h1>
             <div class="s03-rows">
               <div class="s03-row panel" id="s03-r1"><span class="s03-ico ok">✓</span>Sends answers</div>
-              <div class="s03-row panel" id="s03-r2"><span class="s03-ico no">✕</span><span class="s03-dim">Not raw data</span><span class="s03-strike" id="s03-strike"></span></div>
+              <div class="s03-row panel" id="s03-r2"><span class="s03-ico no">✕</span><span class="s03-dim">Not raw data</span><span class="s03-strike" id="s03-strike" data-layout-allow-occlusion></span></div>
               <div class="s03-row panel" id="s03-r3"><span class="s03-ico go">↻</span>Reacts without waiting for Earth</div>
             </div>
           </div>
@@ -210,18 +214,20 @@
           const pkg = q("#s03-packet-glow");
           const easeIO = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
           const drv = { t: 0, beam: 0 };
+          // bus centre measured on the rendered b-roll: (1210,178) at 0.2s … (467,259) at 7.3s
           const satAt = (t) => {
             const u = t / 10;
-            return [1227 - 810 * easeIO(u), 296 + 80 * u];
+            const e = easeIO(u);
+            return [1215 - 810 * e, 176 + 90 * e];
           };
           const render = () => {
             const [x, y] = satAt(drv.t);
             ret.style.transform = `translate(${x}px, ${y}px)`;
             beam.setAttribute("x1", x);
-            beam.setAttribute("y1", y + 40);
+            beam.setAttribute("y1", y + 30);
             const b = drv.beam;
             const px = x + (760 - x) * b;
-            const py = y + 40 + (1010 - y - 40) * b;
+            const py = y + 30 + (1010 - y - 30) * b;
             pk.setAttribute("cx", px);
             pk.setAttribute("cy", py);
             pkg.setAttribute("cx", px);
@@ -232,6 +238,7 @@
           tl.fromTo(ret, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.55);
           tl.fromTo("#s03-reticle i", { scale: 1.6 }, { scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.55);
           tl.fromTo("#s03-tag", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 0.8);
+          tl.to("#s03-tag", { opacity: 0, duration: 0.3, ease: "power2.in" }, 5.0);
 
           // copy, locked to "With AI on board, / a satellite sends answers, / not raw data, / and reacts without waiting for Earth."
           SQ.scramble(tl, q("#s03-kicker"), 0.4, 0.6, 31);
@@ -247,7 +254,7 @@
           tl.fromTo([pk, pkg], { opacity: 0 }, { opacity: 1, duration: 0.2 }, at("vo04", 1) + 0.3);
           tl.fromTo(drv, { beam: 0 }, { beam: 1, duration: 1.5, ease: "power1.in", onUpdate: render }, at("vo04", 1) + 0.3);
           tl.to([pk, pkg], { opacity: 0, duration: 0.25 }, at("vo04", 1) + 1.8);
-          tl.fromTo(pkg, { scale: 1 }, { scale: 1.8, transformOrigin: "50% 50%", duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, at("vo04", 1) + 0.3);
+          tl.fromTo(pkg, { scale: 1 }, { scale: 1.35, transformOrigin: "50% 50%", duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, at("vo04", 1) + 0.3);
           tl.to(beam, { opacity: 0.25, duration: 0.6 }, at("vo04", 1) + 2.0);
 
           // exit: hard glitch into the problem

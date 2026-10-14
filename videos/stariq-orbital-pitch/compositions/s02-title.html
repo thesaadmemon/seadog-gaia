@@ -82,6 +82,18 @@
           color: #eef4ff;
           white-space: nowrap;
         }
+        .s02-flare {
+          position: absolute;
+          left: 160px;
+          top: 368px;
+          width: 1600px;
+          height: 8px;
+          border-radius: 8px;
+          background: linear-gradient(90deg, rgba(95, 216, 255, 0) 0%, rgba(140, 200, 255, 0.9) 42%, #ffffff 50%, rgba(140, 200, 255, 0.9) 58%, rgba(95, 216, 255, 0) 100%);
+          box-shadow: 0 0 30px rgba(95, 170, 255, 0.9);
+          transform-origin: 50% 50%;
+          opacity: 0;
+        }
         .s02-sweep {
           position: absolute;
           top: 300px;
@@ -109,6 +121,7 @@
               <div class="s02-bar r" id="s02-bar-r"></div>
             </div>
           </div>
+          <div class="s02-flare" id="s02-flare"></div>
           <div class="s02-sweep" id="s02-sweep"></div>
         </div>
       </div>
@@ -130,6 +143,9 @@
             { opacity: 1, scale: 1, filter: "blur(0px)", y: 0, duration: 0.7, ease: "expo.out", stagger: { each: 0.045, from: "center" } },
             0.02,
           );
+          // anamorphic streak through the wordmark as it lands
+          tl.fromTo("#s02-flare", { scaleX: 0.05, opacity: 0 }, { scaleX: 1, opacity: 0.95, duration: 0.45, ease: "expo.out" }, 0.0);
+          tl.to("#s02-flare", { opacity: 0, scaleY: 0.4, duration: 1.1, ease: "power2.out" }, 0.45);
           tl.fromTo("#s02-sweep", { x: 240, opacity: 0 }, { x: 1500, opacity: 1, duration: 0.9, ease: "power2.inOut" }, 0.45);
           tl.to("#s02-sweep", { opacity: 0, duration: 0.2 }, 1.36);
           SQ.scramble(tl, q("#s02-kicker"), 0.25, 0.8, 21);
