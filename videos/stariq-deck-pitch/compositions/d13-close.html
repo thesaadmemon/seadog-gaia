@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #02050d;
+        }
+        .d13-bg {
+          position: absolute;
+          inset: 0;
+        }
+        .d13-bg video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .d13-shade {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 40% 50%, rgba(2, 5, 13, 0.72) 0%, rgba(2, 5, 13, 0.2) 65%);
+        }
+        .d13-lock {
+          position: absolute;
+          left: 160px;
+          top: 300px;
+          display: flex;
+          flex-direction: column;
+          gap: 26px;
+        }
+        .d13-word {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 150px;
+          letter-spacing: -0.03em;
+          color: #ffffff;
+          line-height: 1;
+        }
+        .d13-word span {
+          color: #6f9dff;
+        }
+        .d13-tag {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 54px;
+          color: #eef4ff;
+        }
+        .d13-tag .accent {
+          color: #8db2ff;
+        }
+        .d13-contact {
+          display: flex;
+          gap: 26px;
+          align-items: center;
+          margin-top: 20px;
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 26px;
+          letter-spacing: 0.08em;
+          color: #c8d6ee;
+        }
+        .d13-contact b {
+          color: #04091a;
+          background: #6f9dff;
+          padding: 8px 16px;
+          border-radius: 8px;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d13-close" data-width="1920" data-height="1080">
+        <div class="d13-bg" id="d13-bg">
+          <video id="d13-v" src="assets/broll/closing.mp4" muted playsinline data-start="0" data-duration="8" data-media-start="3.5" data-track-index="0"></video>
+        </div>
+        <div class="d13-shade"></div>
+        <div class="d13-lock" id="d13-lock">
+          <div class="d13-word" id="d13-word">Star<span>IQ</span></div>
+          <div class="d13-tag" id="d13-tag">Commercial AI chips, <span class="accent">made safe for space.</span></div>
+          <div class="d13-contact" id="d13-contact"><b>€2M SEED</b>Dr Md Saad Memon · saad.memon@uni.lu</div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 202.7;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          tl.fromTo("#d13-bg", { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1.0, duration: 8, ease: "power1.out" }, 0);
+          SQ.rise(tl, "#d13-word", at("n26", 0) - 0.2, { y: 40, d: 0.8 });
+          SQ.titleIn(tl, q("#d13-tag"), at("n26", 1) - 0.05);
+          SQ.rise(tl, "#d13-contact", at("n26", "end") + 0.3, { y: 16 });
+
+          window.__timelines["d13-close"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

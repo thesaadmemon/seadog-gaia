@@ -1,0 +1,215 @@
+{
+ "voice": "af_heart",
+ "speed": 1.05,
+ "total": 210.67,
+ "lines": [
+  {
+   "id": "n01",
+   "scene": "title",
+   "start": 1.4,
+   "dur": 4.139,
+   "end": 5.539,
+   "text": "Commercial AI chips, made safe for space. This is Star eye-cue."
+  },
+  {
+   "id": "n02",
+   "scene": "title",
+   "start": 5.989,
+   "dur": 3.093,
+   "end": 9.082,
+   "text": "We give Europe the layer that keeps AI correct in orbit."
+  },
+  {
+   "id": "n03",
+   "scene": "sovereign",
+   "start": 9.982,
+   "dur": 1.728,
+   "end": 11.71,
+   "text": "Problem one: sovereignty."
+  },
+  {
+   "id": "n04",
+   "scene": "sovereign",
+   "start": 12.06,
+   "dur": 9.792,
+   "end": 21.852,
+   "text": "Two thirds of active satellites are Starlink. Three quarters are run from the US. And eighty-five percent of launches in twenty twenty-five flew on SpaceX."
+  },
+  {
+   "id": "n05",
+   "scene": "sovereign",
+   "start": 22.302,
+   "dur": 4.885,
+   "end": 27.187,
+   "text": "AI is next, on chips that fail silently. And Europe controls none of the stack."
+  },
+  {
+   "id": "n06",
+   "scene": "race",
+   "start": 28.087,
+   "dur": 2.432,
+   "end": 30.519,
+   "text": "The race for AI computing in space is on."
+  },
+  {
+   "id": "n07",
+   "scene": "race",
+   "start": 30.869,
+   "dur": 13.611,
+   "end": 44.48,
+   "text": "SpaceX has filed for one million satellites. Starcloud, Blue Origin and Cowboy Space have filed for nearly one hundred and sixty thousand more. And Google's AI prototype has been in orbit since October."
+  },
+  {
+   "id": "n08",
+   "scene": "race",
+   "start": 44.93,
+   "dur": 4.224,
+   "end": 49.154,
+   "text": "Of one point one six million satellites filed, not one is European."
+  },
+  {
+   "id": "n09",
+   "scene": "reliability",
+   "start": 50.054,
+   "dur": 1.877,
+   "end": 51.931,
+   "text": "Problem two: reliability."
+  },
+  {
+   "id": "n10",
+   "scene": "reliability",
+   "start": 52.281,
+   "dur": 12.331,
+   "end": 64.612,
+   "text": "We put a commercial AI chip in front of a proton beam, with no protection. A single radiation upset corrupted it. It gave thirty-nine wrong answers in a row, while every health check said all was fine."
+  },
+  {
+   "id": "n11",
+   "scene": "pain",
+   "start": 65.512,
+   "dur": 3.221,
+   "end": 68.733,
+   "text": "Today, satellite builders choose between two bad options."
+  },
+  {
+   "id": "n12",
+   "scene": "pain",
+   "start": 69.083,
+   "dur": 9.899,
+   "end": 78.982,
+   "text": "A space-grade processor, like the one on Perseverance, costs about three hundred thousand dollars, and runs at two hundred megahertz. Too slow for modern AI."
+  },
+  {
+   "id": "n13",
+   "scene": "pain",
+   "start": 79.382,
+   "dur": 10.24,
+   "end": 89.622,
+   "text": "Or a commercial chip, with a hundred times the compute. On Mars, NASA's Ingenuity used one, with protection around it. Planned for five flights, it flew seventy-two."
+  },
+  {
+   "id": "n14",
+   "scene": "pain",
+   "start": 90.022,
+   "dur": 3.051,
+   "end": 93.073,
+   "text": "The difference is not the chip. It's the protection around it."
+  },
+  {
+   "id": "n15",
+   "scene": "demo",
+   "start": 93.973,
+   "dur": 9.173,
+   "end": 103.146,
+   "text": "So we built that protection. Same chip, same beam, now protected. Ninety-nine point six percent of ten thousand images, classified correctly."
+  },
+  {
+   "id": "n16",
+   "scene": "solution",
+   "start": 104.046,
+   "dur": 3.477,
+   "end": 107.523,
+   "text": "Star eye-cue adds three layers inside the chip, not a new chip."
+  },
+  {
+   "id": "n17",
+   "scene": "solution",
+   "start": 107.873,
+   "dur": 9.429,
+   "end": 117.303,
+   "text": "Protection I P supervises and resets the hardware. A radiation-hardened Linux restores service. And a resilience AI checks every answer."
+  },
+  {
+   "id": "n18",
+   "scene": "solution",
+   "start": 117.703,
+   "dur": 3.755,
+   "end": 121.457,
+   "text": "Customers keep the chip they chose. We license the protection above it."
+  },
+  {
+   "id": "n19",
+   "scene": "evidence",
+   "start": 122.357,
+   "dur": 11.264,
+   "end": 133.621,
+   "text": "All of it is measured under a proton beam, not simulated. Three beam campaigns. One hundred and thirty-three Linux failures traced. And zero downtime for the workload under radiation."
+  },
+  {
+   "id": "n20",
+   "scene": "market",
+   "start": 134.521,
+   "dur": 13.739,
+   "end": 148.26,
+   "text": "Satellite on-board computing is a two point two billion dollar market today, heading to five point nine billion by twenty thirty-four. Our base case reaches six point eight million euros in revenue by twenty thirty-one."
+  },
+  {
+   "id": "n21",
+   "scene": "team",
+   "start": 149.16,
+   "dur": 19.733,
+   "end": 168.893,
+   "text": "Our team brings computer architecture, radiation, Linux and AI together. Founder Doctor Saad Memon holds a PhD in radiation-resilient AI. The co-founders are a NASA radiation scientist and a senior European Space Agency engineer, with more than seventy peer-reviewed papers between the founders."
+  },
+  {
+   "id": "n22",
+   "scene": "moat",
+   "start": 169.793,
+   "dur": 12.587,
+   "end": 182.38,
+   "text": "We are three years ahead. We put Linux under the beam in twenty twenty-three, and AI in twenty twenty-four. Ours is the only full stack, tested on Arm, AMD and risk five, with European I P."
+  },
+  {
+   "id": "n23",
+   "scene": "ask",
+   "start": 183.28,
+   "dur": 3.093,
+   "end": 186.373,
+   "text": "We're raising two million euros, over twenty-four months."
+  },
+  {
+   "id": "n24",
+   "scene": "ask",
+   "start": 186.723,
+   "dur": 8.853,
+   "end": 195.577,
+   "text": "A paid pilot at month six. A licence at month twelve. Qualification at month eighteen. And a flight at month twenty-four, ready for Series A."
+  },
+  {
+   "id": "n25",
+   "scene": "ask",
+   "start": 195.977,
+   "dur": 6.229,
+   "end": 202.206,
+   "text": "Pilots start at one hundred and fifty thousand euros. Then, fifteen thousand euros per licensed unit."
+  },
+  {
+   "id": "n26",
+   "scene": "close",
+   "start": 203.206,
+   "dur": 3.968,
+   "end": 207.174,
+   "text": "Star eye-cue. Commercial AI chips, made safe for space."
+  }
+ ]
+}

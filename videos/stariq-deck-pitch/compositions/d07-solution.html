@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d07-grid {
+          display: grid;
+          grid-template-columns: 920px 1fr;
+          gap: 50px;
+          margin-top: 18px;
+          align-items: start;
+        }
+        .d07-render {
+          width: 920px;
+          height: 514px;
+          background: #ffffff;
+        }
+        .d07-rows {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+        .d07-row {
+          display: grid;
+          grid-template-columns: 84px 1fr;
+          gap: 22px;
+          align-items: center;
+          padding: 20px 24px;
+          border-left-width: 6px;
+        }
+        .d07-row img {
+          width: 84px;
+          height: 84px;
+          display: block;
+        }
+        .d07-row .nm {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 36px;
+          color: #eef4ff;
+        }
+        .d07-row .ds {
+          font-family: "Manrope", sans-serif;
+          font-size: 25px;
+          color: #b9c9e4;
+          margin-top: 4px;
+        }
+        .r1 {
+          border-color: #6f9dff;
+        }
+        .r2 {
+          border-color: #34d399;
+        }
+        .r3 {
+          border-color: #ff8a83;
+        }
+        .d07-keep {
+          margin-top: 30px;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d07-solution" data-width="1920" data-height="1080">
+        <div class="slide" id="d07">
+          <div class="kicker" id="d07-k" data-text="SOLUTION">SOLUTION</div>
+          <h1 class="title" id="d07-t">Three layers inside the chip, <span class="accent">not a new chip.</span></h1>
+          <div class="d07-grid">
+            <div class="photo d07-render" id="d07-r"><img src="assets/img/layers.jpg" alt="Three protection layers above the chip" /></div>
+            <div class="d07-rows">
+              <div class="card d07-row r1" id="d07-1"><img src="assets/img/icon-protection.png" alt="" /><div><div class="nm">Protection IP</div><div class="ds">Supervises and resets the hardware</div></div></div>
+              <div class="card d07-row r2" id="d07-2"><img src="assets/img/icon-linux.png" alt="" /><div><div class="nm">Rad-hard Linux</div><div class="ds">Restores service</div></div></div>
+              <div class="card d07-row r3" id="d07-3"><img src="assets/img/icon-ai.png" alt="" /><div><div class="nm">Resilience AI</div><div class="ds">Checks every answer</div></div></div>
+            </div>
+          </div>
+          <div class="banner d07-keep" id="d07-keep"><div>Customers keep the chip they chose. <span class="accent">We license the protection above it.</span></div></div>
+        </div>
+        <div class="foot" id="d07-f">TESTED ON ARM, AMD AND RISC-V · LINUX CHANGES STAY GPLV2 · WE CHARGE FOR THE PROPRIETARY IP</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 103.6;
+          const DUR = 18.3;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          SQ.sceneFade(tl, "#d07", DUR);
+          SQ.scramble(tl, q("#d07-k"), 0.1, 0.5, 701);
+          SQ.titleIn(tl, q("#d07-t"), at("n16", 0));
+          SQ.rise(tl, "#d07-r", at("n16", 0) + 0.8);
+          tl.fromTo("#d07-r img", { scale: 1.08 }, { scale: 1.0, duration: 16, ease: "none" }, at("n16", 0) + 0.8);
+          SQ.rise(tl, "#d07-1", at("n17", 0) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d07-2", at("n17", 1) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d07-3", at("n17", 2) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d07-keep", at("n18", 0) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d07-f", at("n17", 0), { y: 0 });
+          tl.to("#d07-f", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d07-solution"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

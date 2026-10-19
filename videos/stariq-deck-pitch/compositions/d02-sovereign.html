@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d02-stats {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 30px;
+          margin-top: 26px;
+        }
+        .d02-stat {
+          height: 340px;
+          padding: 34px 42px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .d02-logo {
+          height: 80px;
+          display: flex;
+          align-items: center;
+        }
+        .d02-logo img {
+          max-height: 80px;
+          max-width: 300px;
+          display: block;
+        }
+        .d02-stat .num {
+          font-size: 140px;
+        }
+        .d02-stat .label {
+          font-size: 32px;
+        }
+        .d02-banner {
+          margin-top: 34px;
+          font-size: 40px;
+        }
+        .d02-banner img {
+          width: 92px;
+          height: 92px;
+          display: block;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d02-sovereign" data-width="1920" data-height="1080">
+        <div class="slide" id="d02">
+          <div class="kicker" id="d02-k" data-text="PROBLEM 1 · SOVEREIGNTY IN ORBIT">PROBLEM 1 · SOVEREIGNTY IN ORBIT</div>
+          <h1 class="title" id="d02-t">Europe can own AI computing in space, <span class="accent">if it starts now.</span></h1>
+          <div class="d02-stats">
+            <div class="card d02-stat" id="d02-s1">
+              <div class="d02-logo"><img src="assets/img/logo-starlink.png" alt="Starlink" /></div>
+              <div class="num blue" id="d02-n1">0%</div>
+              <div class="label">of active satellites are Starlink</div>
+            </div>
+            <div class="card d02-stat" id="d02-s2">
+              <div class="d02-logo"><img src="assets/img/flag-us.png" alt="United States" /></div>
+              <div class="num blue" id="d02-n2">0%</div>
+              <div class="label">of active satellites run from the US</div>
+            </div>
+            <div class="card d02-stat" id="d02-s3">
+              <div class="d02-logo"><img src="assets/img/logo-spacex.png" alt="SpaceX" /></div>
+              <div class="num blue" id="d02-n3">0%</div>
+              <div class="label">of 2025 launches flew on SpaceX</div>
+            </div>
+          </div>
+          <div class="banner d02-banner" id="d02-b">
+            <img src="assets/img/icon-eu-chip.png" alt="" />
+            <div><div>AI is next, on chips that fail silently.</div><div class="accent">Europe controls none of the stack.</div></div>
+          </div>
+        </div>
+        <div class="foot" id="d02-f">SOURCES: AZMTH CATALOGUE 2026 · BRYCETECH 2025</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 9.5;
+          const DUR = 18.1;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+          const pct = (v) => Math.round(v) + "%";
+
+          SQ.sceneFade(tl, "#d02", DUR);
+          SQ.scramble(tl, q("#d02-k"), at("n03", 0) - 0.2, 0.7, 201);
+          SQ.titleIn(tl, q("#d02-t"), at("n03", 1));
+          [["#d02-s1", "#d02-n1", 67, 0], ["#d02-s2", "#d02-n2", 75, 1], ["#d02-s3", "#d02-n3", 85, 2]].forEach(([card, n, v, k]) => {
+            SQ.rise(tl, card, at("n04", k) - 0.15);
+            SQ.count(tl, q(n), 0, v, at("n04", k), 1.2, pct, "power2.out");
+          });
+          SQ.rise(tl, "#d02-b", at("n05", 0) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d02-f", at("n04", 0), { y: 0 });
+          tl.to("#d02-f", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d02-sovereign"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

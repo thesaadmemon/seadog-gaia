@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d03-bg {
+          position: absolute;
+          inset: 0;
+          opacity: 0.32;
+        }
+        .d03-bg video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .d03-row {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 22px;
+          margin-top: 20px;
+        }
+        .d03-c {
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        .d03-img {
+          height: 170px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #0b1736;
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 30px;
+          letter-spacing: 0.12em;
+          color: #eef4ff;
+          text-align: center;
+          line-height: 1.15;
+        }
+        .d03-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .d03-body {
+          padding: 22px 22px 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .d03-c .num {
+          font-size: 54px;
+        }
+        .d03-c .sm {
+          font-family: "Manrope", sans-serif;
+          font-size: 23px;
+          color: #b9c9e4;
+        }
+        .d03-c .nm {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 18px;
+          letter-spacing: 0.1em;
+          color: #6f9dff;
+        }
+        .d03-zero {
+          margin-top: 30px;
+        }
+        .d03-zero .num {
+          font-size: 76px;
+          color: #8db2ff;
+          min-width: 90px;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d03-race" data-width="1920" data-height="1080">
+        <div class="d03-bg" id="d03-bg">
+          <video id="d03-v" src="assets/broll/constellation.mp4" muted playsinline data-start="0" data-duration="22" data-playback-rate="0.73" data-track-index="0"></video>
+        </div>
+        <div class="slide" id="d03">
+          <div class="kicker" id="d03-k" data-text="THE RACE · THE GAME IS AFOOT">THE RACE · THE GAME IS AFOOT</div>
+          <h1 class="title" id="d03-t">The race for AI computing in space is on.</h1>
+          <div class="d03-row">
+            <div class="card d03-c" id="d03-c1">
+              <div class="d03-img"><img src="assets/img/race-spacex.jpg" alt="SpaceX" /></div>
+              <div class="d03-body"><div class="num" id="d03-n1">0</div><div class="sm">satellites filed</div><div class="nm">SPACEX · STARMIND</div></div>
+            </div>
+            <div class="card d03-c" id="d03-c2">
+              <div class="d03-img">STARCLOUD</div>
+              <div class="d03-body"><div class="num">87,996</div><div class="sm">satellites filed</div><div class="nm">ORBITAL DATA CENTER</div></div>
+            </div>
+            <div class="card d03-c" id="d03-c3">
+              <div class="d03-img"><img src="assets/img/race-blueorigin.jpg" alt="Blue Origin" /></div>
+              <div class="d03-body"><div class="num">51,600</div><div class="sm">satellites filed</div><div class="nm">PROJECT SUNRISE</div></div>
+            </div>
+            <div class="card d03-c" id="d03-c4">
+              <div class="d03-img"><div><div>COWBOY</div><div>SPACE</div></div></div>
+              <div class="d03-body"><div class="num">20,000</div><div class="sm">satellites filed</div><div class="nm">STAMPEDE</div></div>
+            </div>
+            <div class="card d03-c" id="d03-c5">
+              <div class="d03-img"><img src="assets/img/race-google.jpg" alt="Google Project Suncatcher" /></div>
+              <div class="d03-body"><div class="num blue">In orbit</div><div class="sm">since 1 Oct 2026</div><div class="nm">4 TPUS ON BOARD</div></div>
+            </div>
+          </div>
+          <div class="banner d03-zero" id="d03-z">
+            <div class="num" id="d03-zn">0</div>
+            <div><div>of 1.16 million satellites filed by a European company.</div><div class="accent">Never a full AI stack. In orbit, it still can.</div></div>
+          </div>
+        </div>
+        <div class="foot" id="d03-f">FCC FILINGS 2026 (APPLICATIONS, NOT DEPLOYMENTS) · LEWIS, ARXIV 2607.29644 · GOOGLE &amp; PLANET</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 27.6;
+          const DUR = 22.0;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          SQ.sceneFade(tl, "#d03", DUR);
+          tl.fromTo("#d03-bg", { opacity: 0 }, { opacity: 0.32, duration: 1.0 }, 0);
+          tl.to("#d03-bg", { opacity: 0, duration: 0.4 }, DUR - 0.4);
+          SQ.scramble(tl, q("#d03-k"), 0.1, 0.7, 301);
+          SQ.titleIn(tl, q("#d03-t"), at("n06", 0) - 0.05);
+          SQ.rise(tl, "#d03-c1", at("n07", 0) - 0.1);
+          SQ.count(tl, q("#d03-n1"), 0, 1000000, at("n07", 0) + 0.1, 1.6, (v) => Math.round(v).toLocaleString("en-US"), "power2.out");
+          SQ.rise(tl, "#d03-c2", at("n07", 1) - 0.1);
+          SQ.rise(tl, "#d03-c3", at("n07", 2) - 0.05);
+          SQ.rise(tl, "#d03-c4", at("n07", 2) + 1.6);
+          SQ.rise(tl, "#d03-c5", at("n07", 3) + 0.4);
+          SQ.rise(tl, "#d03-z", at("n08", 0) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d03-f", at("n07", 0), { y: 0 });
+          tl.to("#d03-f", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d03-race"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+/* StarIQ deck pitch — one idea per slide. Shared slide grammar for every scene. */
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 120px 120px 130px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.slide .kicker {
+  font-size: 21px;
+}
+.slide .title {
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+  font-size: 74px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #eef4ff;
+  margin: 0;
+  max-width: 1600px;
+}
+.slide .title .accent {
+  color: #6f9dff;
+}
+.card {
+  background: rgba(10, 22, 50, 0.78);
+  border: 2px solid rgba(95, 160, 255, 0.32);
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+.photo {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.num {
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+  color: #eef4ff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.num.blue {
+  color: #6f9dff;
+}
+.num.green {
+  color: #34d399;
+}
+.num.red {
+  color: #ff6b62;
+}
+.num.gold {
+  color: #f3ac3d;
+}
+.label {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #c8d6ee;
+  line-height: 1.3;
+}
+.tag {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 40px;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.14em;
+}
+.tag.red {
+  background: rgba(255, 107, 98, 0.16);
+  color: #ff8a83;
+  border: 2px solid rgba(255, 107, 98, 0.6);
+}
+.tag.green {
+  background: rgba(52, 211, 153, 0.14);
+  color: #5ee0ae;
+  border: 2px solid rgba(52, 211, 153, 0.6);
+}
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 24px 34px;
+  border-radius: 16px;
+  background: rgba(21, 86, 232, 0.16);
+  border: 2px solid rgba(111, 157, 255, 0.45);
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  color: #eef4ff;
+  line-height: 1.3;
+}
+.banner .accent {
+  color: #8db2ff;
+}
+.foot {
+  position: absolute;
+  left: 120px;
+  bottom: 86px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: #8197ba;
+}
+.word {
+  display: inline-block;
+}

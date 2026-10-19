@@ -1,0 +1,499 @@
+{
+ "n01": [
+  {
+   "text": "Commercial AI chips,",
+   "start": 1.4,
+   "end": 2.76
+  },
+  {
+   "text": "made safe for space.",
+   "start": 2.76,
+   "end": 4.08
+  },
+  {
+   "text": "This is Star eye-cue.",
+   "start": 4.08,
+   "end": 5.54
+  }
+ ],
+ "n02": [
+  {
+   "text": "We give Europe the layer that keeps AI correct in orbit.",
+   "start": 5.99,
+   "end": 9.08
+  }
+ ],
+ "n03": [
+  {
+   "text": "Problem one:",
+   "start": 9.98,
+   "end": 10.81
+  },
+  {
+   "text": "sovereignty.",
+   "start": 10.81,
+   "end": 11.71
+  }
+ ],
+ "n04": [
+  {
+   "text": "Two thirds of active satellites are Starlink.",
+   "start": 12.06,
+   "end": 14.83
+  },
+  {
+   "text": "Three quarters are run from the US.",
+   "start": 14.83,
+   "end": 17.34
+  },
+  {
+   "text": "And eighty-five percent of launches in twenty twenty-five flew on SpaceX.",
+   "start": 17.34,
+   "end": 21.85
+  }
+ ],
+ "n05": [
+  {
+   "text": "AI is next,",
+   "start": 22.3,
+   "end": 23.46
+  },
+  {
+   "text": "on chips that fail silently.",
+   "start": 23.46,
+   "end": 25.2
+  },
+  {
+   "text": "And Europe controls none of the stack.",
+   "start": 25.2,
+   "end": 27.19
+  }
+ ],
+ "n06": [
+  {
+   "text": "The race for AI computing in space is on.",
+   "start": 28.09,
+   "end": 30.52
+  }
+ ],
+ "n07": [
+  {
+   "text": "SpaceX has filed for one million satellites.",
+   "start": 30.87,
+   "end": 33.88
+  },
+  {
+   "text": "Starcloud,",
+   "start": 33.88,
+   "end": 34.95
+  },
+  {
+   "text": "Blue Origin and Cowboy Space have filed for nearly one hundred and sixty thousand more.",
+   "start": 34.95,
+   "end": 40.49
+  },
+  {
+   "text": "And Google's AI prototype has been in orbit since October.",
+   "start": 40.49,
+   "end": 44.48
+  }
+ ],
+ "n08": [
+  {
+   "text": "Of one point one six million satellites filed,",
+   "start": 44.93,
+   "end": 47.77
+  },
+  {
+   "text": "not one is European.",
+   "start": 47.77,
+   "end": 49.15
+  }
+ ],
+ "n09": [
+  {
+   "text": "Problem two:",
+   "start": 50.05,
+   "end": 50.93
+  },
+  {
+   "text": "reliability.",
+   "start": 50.93,
+   "end": 51.93
+  }
+ ],
+ "n10": [
+  {
+   "text": "We put a commercial AI chip in front of a proton beam,",
+   "start": 52.28,
+   "end": 55.45
+  },
+  {
+   "text": "with no protection.",
+   "start": 55.45,
+   "end": 56.87
+  },
+  {
+   "text": "A single radiation upset corrupted it.",
+   "start": 56.87,
+   "end": 59.56
+  },
+  {
+   "text": "It gave thirty-nine wrong answers in a row,",
+   "start": 59.56,
+   "end": 62.34
+  },
+  {
+   "text": "while every health check said all was fine.",
+   "start": 62.34,
+   "end": 64.61
+  }
+ ],
+ "n11": [
+  {
+   "text": "Today,",
+   "start": 65.51,
+   "end": 66.02
+  },
+  {
+   "text": "satellite builders choose between two bad options.",
+   "start": 66.02,
+   "end": 68.73
+  }
+ ],
+ "n12": [
+  {
+   "text": "A space-grade processor,",
+   "start": 69.08,
+   "end": 70.71
+  },
+  {
+   "text": "like the one on Perseverance,",
+   "start": 70.71,
+   "end": 72.27
+  },
+  {
+   "text": "costs about three hundred thousand dollars,",
+   "start": 72.27,
+   "end": 75.52
+  },
+  {
+   "text": "and runs at two hundred megahertz.",
+   "start": 75.52,
+   "end": 76.96
+  },
+  {
+   "text": "Too slow for modern AI.",
+   "start": 76.96,
+   "end": 78.98
+  }
+ ],
+ "n13": [
+  {
+   "text": "Or a commercial chip,",
+   "start": 79.38,
+   "end": 80.63
+  },
+  {
+   "text": "with a hundred times the compute.",
+   "start": 80.63,
+   "end": 82.46
+  },
+  {
+   "text": "On Mars,",
+   "start": 82.46,
+   "end": 83.41
+  },
+  {
+   "text": "NASA's Ingenuity used one,",
+   "start": 83.41,
+   "end": 85.23
+  },
+  {
+   "text": "with protection around it.",
+   "start": 85.23,
+   "end": 86.73
+  },
+  {
+   "text": "Planned for five flights,",
+   "start": 86.73,
+   "end": 88.34
+  },
+  {
+   "text": "it flew seventy-two.",
+   "start": 88.34,
+   "end": 89.62
+  }
+ ],
+ "n14": [
+  {
+   "text": "The difference is not the chip.",
+   "start": 90.02,
+   "end": 91.57
+  },
+  {
+   "text": "It's the protection around it.",
+   "start": 91.57,
+   "end": 93.07
+  }
+ ],
+ "n15": [
+  {
+   "text": "So we built that protection.",
+   "start": 93.97,
+   "end": 95.52
+  },
+  {
+   "text": "Same chip,",
+   "start": 95.52,
+   "end": 96.54
+  },
+  {
+   "text": "same beam,",
+   "start": 96.54,
+   "end": 98.0
+  },
+  {
+   "text": "now protected.",
+   "start": 98.0,
+   "end": 98.47
+  },
+  {
+   "text": "Ninety-nine point six percent of ten thousand images,",
+   "start": 98.47,
+   "end": 101.76
+  },
+  {
+   "text": "classified correctly.",
+   "start": 101.76,
+   "end": 103.15
+  }
+ ],
+ "n16": [
+  {
+   "text": "Star eye-cue adds three layers inside the chip,",
+   "start": 104.05,
+   "end": 106.6
+  },
+  {
+   "text": "not a new chip.",
+   "start": 106.6,
+   "end": 107.52
+  }
+ ],
+ "n17": [
+  {
+   "text": "Protection I P supervises and resets the hardware.",
+   "start": 107.87,
+   "end": 111.36
+  },
+  {
+   "text": "A radiation-hardened Linux restores service.",
+   "start": 111.36,
+   "end": 114.36
+  },
+  {
+   "text": "And a resilience AI checks every answer.",
+   "start": 114.36,
+   "end": 117.3
+  }
+ ],
+ "n18": [
+  {
+   "text": "Customers keep the chip they chose.",
+   "start": 117.7,
+   "end": 119.65
+  },
+  {
+   "text": "We license the protection above it.",
+   "start": 119.65,
+   "end": 121.46
+  }
+ ],
+ "n19": [
+  {
+   "text": "All of it is measured under a proton beam,",
+   "start": 122.36,
+   "end": 124.71
+  },
+  {
+   "text": "not simulated.",
+   "start": 124.71,
+   "end": 126.0
+  },
+  {
+   "text": "Three beam campaigns.",
+   "start": 126.0,
+   "end": 127.58
+  },
+  {
+   "text": "One hundred and thirty-three Linux failures traced.",
+   "start": 127.58,
+   "end": 130.5
+  },
+  {
+   "text": "And zero downtime for the workload under radiation.",
+   "start": 130.5,
+   "end": 133.62
+  }
+ ],
+ "n20": [
+  {
+   "text": "Satellite on-board computing is a two point two billion dollar market today,",
+   "start": 134.52,
+   "end": 139.07
+  },
+  {
+   "text": "heading to five point nine billion by twenty thirty-four.",
+   "start": 139.07,
+   "end": 142.75
+  },
+  {
+   "text": "Our base case reaches six point eight million euros in revenue by twenty thirty-one.",
+   "start": 142.75,
+   "end": 148.26
+  }
+ ],
+ "n21": [
+  {
+   "text": "Our team brings computer architecture,",
+   "start": 149.16,
+   "end": 151.26
+  },
+  {
+   "text": "radiation,",
+   "start": 151.26,
+   "end": 152.34
+  },
+  {
+   "text": "Linux and AI together.",
+   "start": 152.34,
+   "end": 154.38
+  },
+  {
+   "text": "Founder Doctor Saad Memon holds a PhD in radiation-resilient AI.",
+   "start": 154.38,
+   "end": 158.28
+  },
+  {
+   "text": "The co-founders are a NASA radiation scientist and a senior European Space Agency engineer,",
+   "start": 158.28,
+   "end": 164.47
+  },
+  {
+   "text": "with more than seventy peer-reviewed papers between the founders.",
+   "start": 164.47,
+   "end": 168.89
+  }
+ ],
+ "n22": [
+  {
+   "text": "We are three years ahead.",
+   "start": 169.79,
+   "end": 171.14
+  },
+  {
+   "text": "We put Linux under the beam in twenty twenty-three,",
+   "start": 171.14,
+   "end": 175.86
+  },
+  {
+   "text": "and AI in twenty twenty-four.",
+   "start": 175.86,
+   "end": 177.8
+  },
+  {
+   "text": "Ours is the only full stack,",
+   "start": 177.8,
+   "end": 179.14
+  },
+  {
+   "text": "tested on Arm,",
+   "start": 179.14,
+   "end": 180.97
+  },
+  {
+   "text": "AMD and risk five,",
+   "start": 180.97,
+   "end": 181.14
+  },
+  {
+   "text": "with European I P.",
+   "start": 181.14,
+   "end": 182.38
+  }
+ ],
+ "n23": [
+  {
+   "text": "We're raising two million euros,",
+   "start": 183.28,
+   "end": 185.07
+  },
+  {
+   "text": "over twenty-four months.",
+   "start": 185.07,
+   "end": 186.37
+  }
+ ],
+ "n24": [
+  {
+   "text": "A paid pilot at month six.",
+   "start": 186.72,
+   "end": 188.23
+  },
+  {
+   "text": "A licence at month twelve.",
+   "start": 188.23,
+   "end": 190.46
+  },
+  {
+   "text": "Qualification at month eighteen.",
+   "start": 190.46,
+   "end": 192.6
+  },
+  {
+   "text": "And a flight at month twenty-four,",
+   "start": 192.6,
+   "end": 194.4
+  },
+  {
+   "text": "ready for Series A.",
+   "start": 194.4,
+   "end": 195.58
+  }
+ ],
+ "n25": [
+  {
+   "text": "Pilots start at one hundred and fifty thousand euros.",
+   "start": 195.98,
+   "end": 198.97
+  },
+  {
+   "text": "Then,",
+   "start": 198.97,
+   "end": 199.73
+  },
+  {
+   "text": "fifteen thousand euros per licensed unit.",
+   "start": 199.73,
+   "end": 202.21
+  }
+ ],
+ "n26": [
+  {
+   "text": "Star eye-cue.",
+   "start": 203.21,
+   "end": 204.33
+  },
+  {
+   "text": "Commercial AI chips,",
+   "start": 204.33,
+   "end": 205.68
+  },
+  {
+   "text": "made safe for space.",
+   "start": 205.68,
+   "end": 207.17
+  }
+ ]
+}

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d09-grid {
+          display: grid;
+          grid-template-columns: 900px 1fr;
+          gap: 50px;
+          margin-top: 18px;
+        }
+        .d09-chart {
+          height: 560px;
+          padding: 30px 40px 26px;
+          display: flex;
+          flex-direction: column;
+        }
+        .d09-ch-h {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-family: "Manrope", sans-serif;
+          font-weight: 700;
+          font-size: 26px;
+          color: #c8d6ee;
+        }
+        .d09-ch-h b {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 20px;
+          color: #6f9dff;
+          padding: 6px 14px;
+          border-radius: 20px;
+          background: rgba(111, 157, 255, 0.14);
+        }
+        .d09-bars {
+          flex: 1;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 60px;
+          align-items: end;
+          padding: 0 40px;
+        }
+        .d09-bar {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+        .d09-bar .v {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 34px;
+          color: #eef4ff;
+        }
+        .d09-bar .b {
+          width: 130px;
+          border-radius: 8px 8px 0 0;
+          background: #6f8fc7;
+          transform-origin: 50% 100%;
+        }
+        .d09-bar.hi .b {
+          background: #6f9dff;
+          box-shadow: 0 0 40px rgba(111, 157, 255, 0.45);
+        }
+        .d09-bar .y {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 22px;
+          color: #8197ba;
+        }
+        .d09-stack {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+        .d09-k {
+          display: grid;
+          grid-template-columns: 250px 1fr;
+          align-items: center;
+          padding: 24px 30px;
+        }
+        .d09-k .num {
+          font-size: 64px;
+        }
+        .d09-k .t {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 20px;
+          letter-spacing: 0.18em;
+          color: #8db2ff;
+        }
+        .d09-k .d {
+          font-family: "Manrope", sans-serif;
+          font-size: 26px;
+          color: #c8d6ee;
+          margin-top: 4px;
+        }
+        .d09-k.som {
+          background: #1556e8;
+          border-color: #6f9dff;
+        }
+        .d09-k.som .t,
+        .d09-k.som .d {
+          color: #eaf1ff;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d09-market" data-width="1920" data-height="1080">
+        <div class="slide" id="d09">
+          <div class="kicker" id="d09-k" data-text="HOW BIG COULD THIS BECOME?">HOW BIG COULD THIS BECOME?</div>
+          <h1 class="title" id="d09-t">$2.2B today, <span class="accent">$5.9B by 2034.</span></h1>
+          <div class="d09-grid">
+            <div class="card d09-chart" id="d09-c">
+              <div class="d09-ch-h">Satellite on-board computing, $B<b>+13.4% A YEAR</b></div>
+              <div class="d09-bars">
+                <div class="d09-bar" id="d09-b1"><div class="v">$1.9B</div><div class="b" style="height: 122px"></div><div class="y">2025</div></div>
+                <div class="d09-bar" id="d09-b2"><div class="v">$2.2B</div><div class="b" style="height: 142px"></div><div class="y">2026</div></div>
+                <div class="d09-bar hi" id="d09-b3"><div class="v">$5.9B</div><div class="b" style="height: 380px"></div><div class="y">2034</div></div>
+              </div>
+            </div>
+            <div class="d09-stack">
+              <div class="card d09-k" id="d09-m"><div class="num">$4.0B</div><div><div class="t">MARKET</div><div class="d">On-board computing, 2031</div></div></div>
+              <div class="card d09-k" id="d09-s"><div class="num">€45M</div><div><div class="t">SAM</div><div class="d">Open satellites, per year</div></div></div>
+              <div class="card d09-k som" id="d09-o"><div class="num">€6.8M</div><div><div class="t">SOM</div><div class="d">Our base-case revenue, 2031</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="foot" id="d09-f">SOURCES: FORTUNE BUSINESS INSIGHTS · NOVASPACE · $4.0B IS THE PLATFORM MARKET, NOT OUR IP TAM</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 134.0;
+          const DUR = 14.7;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          SQ.sceneFade(tl, "#d09", DUR);
+          SQ.scramble(tl, q("#d09-k"), 0.1, 0.7, 901);
+          SQ.titleIn(tl, q("#d09-t"), at("n20", 0));
+          SQ.rise(tl, "#d09-c", at("n20", 0) + 0.3);
+          tl.fromTo("#d09-b1 .b", { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: "power3.out" }, at("n20", 0) + 0.8);
+          tl.fromTo("#d09-b2 .b", { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: "power3.out" }, at("n20", 0) + 1.6);
+          tl.fromTo("#d09-b3 .b", { scaleY: 0 }, { scaleY: 1, duration: 1.1, ease: "power3.out" }, at("n20", 1));
+          SQ.rise(tl, ["#d09-b1 .v", "#d09-b2 .v"], at("n20", 0) + 1.2, { y: 12, stagger: 0.8 });
+          SQ.rise(tl, "#d09-b3 .v", at("n20", 1) + 0.8, { y: 12 });
+          SQ.rise(tl, ["#d09-m", "#d09-s"], at("n20", 1) + 1.2, { y: 24, stagger: 0.5 });
+          SQ.rise(tl, "#d09-o", at("n20", 2), { y: 24 });
+          SQ.rise(tl, "#d09-f", at("n20", 0), { y: 0 });
+          tl.to("#d09-f", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d09-market"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

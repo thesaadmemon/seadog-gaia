@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d01 {
+          position: absolute;
+          inset: 0;
+          background: #04091a;
+        }
+        .d01-photo {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 1210px;
+          height: 1080px;
+          transform-origin: 70% 40%;
+        }
+        .d01-photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .d01-fade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, #04091a 0%, #04091a 34%, rgba(4, 9, 26, 0.55) 52%, rgba(4, 9, 26, 0) 70%);
+        }
+        .d01-copy {
+          position: absolute;
+          left: 120px;
+          top: 250px;
+          width: 900px;
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+        }
+        .d01-word {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 76px;
+          letter-spacing: -0.02em;
+          color: #eef4ff;
+        }
+        .d01-word span {
+          color: #6f9dff;
+        }
+        .d01-h {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 84px;
+          line-height: 1.06;
+          letter-spacing: -0.02em;
+          color: #ffffff;
+          margin: 0;
+        }
+        .d01-sub {
+          font-family: "Manrope", sans-serif;
+          font-weight: 400;
+          font-size: 36px;
+          color: #b9c9e4;
+          font-style: italic;
+        }
+        .d01-line {
+          font-family: "Manrope", sans-serif;
+          font-weight: 700;
+          font-size: 34px;
+          color: #8db2ff;
+          margin-top: 18px;
+        }
+        .d01-seed {
+          position: absolute;
+          left: 120px;
+          bottom: 110px;
+          display: flex;
+          gap: 18px;
+          align-items: center;
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0.2em;
+          color: #c8d6ee;
+        }
+        .d01-seed b {
+          color: #04091a;
+          background: #6f9dff;
+          padding: 8px 16px;
+          border-radius: 8px;
+          letter-spacing: 0.12em;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d01-title" data-width="1920" data-height="1080">
+        <div class="d01" id="d01">
+          <div class="d01-photo" id="d01-photo"><img src="assets/img/title-satellite.jpg" alt="AI satellite above Europe at night (rendering)" /></div>
+          <div class="d01-fade"></div>
+          <div class="d01-copy">
+            <div class="d01-word" id="d01-word">Star<span>IQ</span></div>
+            <h1 class="d01-h" id="d01-h">Commercial AI chips, made safe for space.</h1>
+            <div class="d01-sub" id="d01-sub">For Europe’s sovereign AI constellations.</div>
+            <div class="d01-line" id="d01-line">The layer that keeps AI correct in orbit.</div>
+          </div>
+          <div class="d01-seed" id="d01-seed"><b>€2M SEED ROUND</b>DR SAAD MEMON · LUXEMBOURG · OCTOBER 2026</div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 0;
+          const DUR = 9.5;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          tl.fromTo("#d01-photo", { scale: 1.12, x: 40 }, { scale: 1.0, x: 0, duration: DUR, ease: "power1.out" }, 0);
+          SQ.rise(tl, "#d01-word", 0.4);
+          SQ.titleIn(tl, q("#d01-h"), at("n01", 0) - 0.1);
+          SQ.rise(tl, "#d01-sub", at("n01", 1) + 0.4, { y: 16 });
+          SQ.rise(tl, "#d01-line", at("n02", 0), { y: 16 });
+          SQ.rise(tl, "#d01-seed", 2.2, { y: 12 });
+          tl.to("#d01", { opacity: 0, duration: 0.35, ease: "power2.in" }, DUR - 0.35);
+
+          window.__timelines["d01-title"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

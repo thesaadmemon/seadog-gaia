@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d10-grid {
+          display: grid;
+          grid-template-columns: 820px 1fr 1fr;
+          gap: 30px;
+          margin-top: 18px;
+        }
+        .d10-c {
+          min-height: 410px;
+          padding: 40px 36px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .d10-founder {
+          display: grid;
+          grid-template-columns: 230px 1fr;
+          gap: 30px;
+          align-items: start;
+        }
+        .d10-founder img {
+          width: 230px;
+          height: 230px;
+          display: block;
+        }
+        .d10-c .nm {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 40px;
+          color: #eef4ff;
+          line-height: 1.15;
+        }
+        .d10-c .role {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 20px;
+          letter-spacing: 0.14em;
+          color: #6f9dff;
+        }
+        .d10-c ul {
+          margin: 6px 0 0;
+          padding: 0 0 0 26px;
+          font-family: "Manrope", sans-serif;
+          font-size: 29px;
+          line-height: 1.6;
+          color: #c8d6ee;
+        }
+        .d10-co {
+          align-items: center;
+          text-align: center;
+          justify-content: center;
+        }
+        .d10-co img {
+          height: 110px;
+          display: block;
+          margin-bottom: 10px;
+        }
+        .d10-co .ds {
+          font-family: "Manrope", sans-serif;
+          font-size: 26px;
+          color: #c8d6ee;
+          line-height: 1.35;
+        }
+        .d10-esa {
+          background: #003247;
+          border-radius: 12px;
+          padding: 18px 22px;
+          margin-bottom: 10px;
+        }
+        .d10-esa img {
+          height: 70px;
+          margin: 0;
+        }
+        .d10-band {
+          margin-top: 30px;
+          justify-content: center;
+          gap: 80px;
+          font-size: 38px;
+        }
+        .d10-band b {
+          color: #8db2ff;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d10-team" data-width="1920" data-height="1080">
+        <div class="slide" id="d10">
+          <div class="kicker" id="d10-k" data-text="IS IT A GREAT TEAM WITH THE KNOW-HOW?">IS IT A GREAT TEAM WITH THE KNOW-HOW?</div>
+          <h1 class="title" id="d10-t">Architecture, radiation, Linux and AI <span class="accent">in one team.</span></h1>
+          <div class="d10-grid">
+            <div class="card d10-c" id="d10-f1">
+              <div class="d10-founder">
+                <img src="assets/img/founder.png" alt="Dr Md Saad Memon" />
+                <div>
+                  <div class="nm">Md Saad Memon, PhD</div>
+                  <div class="role">FOUNDER &amp; CEO</div>
+                  <ul>
+                    <li>PhD, radiation-resilient AI</li>
+                    <li>Double MSc, St Andrews</li>
+                    <li>Best space entrepreneur, Europe</li>
+                    <li>Built two supercomputers</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="card d10-c d10-co" id="d10-f2">
+              <img src="assets/img/logo-nasa.png" alt="NASA" />
+              <div class="nm">NASA scientist, PhD</div>
+              <div class="role">CO-FOUNDER &amp; CTO</div>
+              <div class="ds">Computer scientist and radiation expert</div>
+            </div>
+            <div class="card d10-c d10-co" id="d10-f3">
+              <div class="d10-esa"><img src="assets/img/logo-esa.svg" alt="European Space Agency" /></div>
+              <div class="nm">Senior engineer, ESA</div>
+              <div class="role">CO-FOUNDER &amp; VP ENG</div>
+              <div class="ds">Radiation hardness assurance</div>
+            </div>
+          </div>
+          <div class="banner d10-band" id="d10-band"><div><b>70+</b> peer-reviewed papers</div><div><b>5+</b> years each in the field</div><div><b>3</b> continents</div></div>
+        </div>
+        <div class="foot" id="d10-foot">CO-FOUNDER NAMES UNDER NDA</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 148.7;
+          const DUR = 20.6;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          SQ.sceneFade(tl, "#d10", DUR);
+          SQ.scramble(tl, q("#d10-k"), 0.1, 0.8, 1001);
+          SQ.titleIn(tl, q("#d10-t"), at("n21", 0));
+          SQ.rise(tl, "#d10-f1", at("n21", 3) - 0.15);
+          SQ.rise(tl, "#d10-f1 li", at("n21", 3) + 0.6, { y: 12, stagger: 0.35 });
+          SQ.rise(tl, "#d10-f2", at("n21", 4) + 0.6);
+          SQ.rise(tl, "#d10-f3", at("n21", 4) + 2.6);
+          SQ.rise(tl, "#d10-band", at("n21", 5), { y: 24 });
+          SQ.rise(tl, "#d10-foot", at("n21", 4), { y: 0 });
+          tl.to("#d10-foot", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d10-team"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d08-pics {
+          display: grid;
+          grid-template-columns: 1040px 1fr;
+          gap: 30px;
+          margin-top: 14px;
+        }
+        .d08-p1 {
+          height: 372px;
+        }
+        .d08-p2 {
+          height: 372px;
+        }
+        .d08-cap {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 17px;
+          letter-spacing: 0.08em;
+          color: #8197ba;
+          margin-top: 10px;
+        }
+        .d08-stats {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 30px;
+          margin-top: 26px;
+        }
+        .d08-s {
+          padding: 26px 32px;
+          display: flex;
+          align-items: baseline;
+          gap: 22px;
+        }
+        .d08-s .num {
+          font-size: 84px;
+        }
+        .d08-s .label {
+          font-size: 27px;
+          color: #eef4ff;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d08-evidence" data-width="1920" data-height="1080">
+        <div class="slide" id="d08">
+          <div class="kicker" id="d08-k" data-text="EVIDENCE">EVIDENCE</div>
+          <h1 class="title" id="d08-t">Measured under a proton beam, <span class="accent">not simulated.</span></h1>
+          <div class="d08-pics">
+            <div>
+              <div class="photo d08-p1" id="d08-p1"><img src="assets/img/chips-on-beam.jpg" alt="Three chips on the proton beam" /></div>
+              <div class="d08-cap">THREE CHIPS ON THE BEAM · ARM · ARM · RISC-V</div>
+            </div>
+            <div>
+              <div class="photo d08-p2" id="d08-p2"><img src="assets/img/pi-cluster.jpg" alt="Self-healing Raspberry Pi cluster" /></div>
+              <div class="d08-cap">SELF-HEALING PI CLUSTER</div>
+            </div>
+          </div>
+          <div class="d08-stats">
+            <div class="card d08-s" id="d08-s1"><div class="num gold">3</div><div class="label">beam campaigns</div></div>
+            <div class="card d08-s" id="d08-s2"><div class="num blue" id="d08-n2">0</div><div class="label">Linux failures traced</div></div>
+            <div class="card d08-s" id="d08-s3"><div class="num green">Zero</div><div class="label">downtime of the workload under radiation</div></div>
+          </div>
+        </div>
+        <div class="foot" id="d08-f">MEMON ET AL., NASA NTRS 20250004489 · IEEE TRANSACTIONS ON RELIABILITY</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 121.9;
+          const DUR = 12.1;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          SQ.sceneFade(tl, "#d08", DUR);
+          SQ.scramble(tl, q("#d08-k"), 0.1, 0.5, 801);
+          SQ.titleIn(tl, q("#d08-t"), at("n19", 0));
+          SQ.rise(tl, "#d08-p1", at("n19", 0) + 0.6);
+          SQ.rise(tl, "#d08-p2", at("n19", 1));
+          tl.fromTo(["#d08-p1 img", "#d08-p2 img"], { scale: 1.08 }, { scale: 1.0, duration: 11, ease: "none" }, at("n19", 0) + 0.6);
+          SQ.rise(tl, "#d08-s1", at("n19", 2) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d08-s2", at("n19", 3) - 0.1, { y: 24 });
+          SQ.count(tl, q("#d08-n2"), 0, 133, at("n19", 3), 1.4, (v) => String(Math.round(v)), "power2.out");
+          SQ.rise(tl, "#d08-s3", at("n19", 4) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d08-f", at("n19", 1), { y: 0 });
+          tl.to("#d08-f", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d08-evidence"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

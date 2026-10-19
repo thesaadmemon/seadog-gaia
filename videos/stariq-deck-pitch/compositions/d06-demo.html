@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d06-grid {
+          display: grid;
+          grid-template-columns: 1fr 560px;
+          gap: 60px;
+          margin-top: 18px;
+          align-items: start;
+        }
+        .d06-left {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+        .d06-big {
+          display: flex;
+          align-items: baseline;
+          gap: 28px;
+        }
+        .d06-big .num {
+          font-size: 230px;
+          text-shadow: 0 0 60px rgba(52, 211, 153, 0.35);
+        }
+        .d06-big .label {
+          font-size: 40px;
+          color: #eef4ff;
+        }
+        .d06-chips {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+        .d06-chip {
+          padding: 14px 22px;
+          border-radius: 40px;
+          border: 2px solid rgba(95, 160, 255, 0.4);
+          background: rgba(10, 22, 50, 0.8);
+          font-family: "Manrope", sans-serif;
+          font-weight: 700;
+          font-size: 26px;
+          color: #dbe6f8;
+        }
+        .d06-inf img {
+          width: 560px;
+          height: 560px;
+          display: block;
+          border-radius: 10px;
+        }
+        .d06-cap {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 17px;
+          letter-spacing: 0.06em;
+          color: #8197ba;
+          margin-top: 10px;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d06-demo" data-width="1920" data-height="1080">
+        <div class="slide" id="d06">
+          <div class="kicker" id="d06-k" data-text="DEMONSTRATED UNDER ACCELERATED RADIATION TEST">DEMONSTRATED UNDER ACCELERATED RADIATION TEST</div>
+          <h1 class="title" id="d06-t">Protected, the same Arm chip <span class="accent">stays correct.</span></h1>
+          <div class="d06-grid">
+            <div class="d06-left">
+              <div class="d06-chips" id="d06-chips">
+                <div class="d06-chip">Same chip</div>
+                <div class="d06-chip">Same proton beam</div>
+                <div class="d06-chip">Now protected</div>
+              </div>
+              <div class="d06-big">
+                <div class="num green" id="d06-n">0.0%</div>
+              </div>
+              <div class="label" id="d06-l">correct under the beam · ResNet-20 · 10,000 images</div>
+            </div>
+            <div>
+              <div class="d06-inf" id="d06-inf"><img src="assets/img/grid-protected.jpg" alt="Protected inferences, illustrative re-render" /></div>
+              <div class="d06-cap">ILLUSTRATIVE RE-RENDER · NOT A CAPTURE FROM THE RUN</div>
+            </div>
+          </div>
+        </div>
+        <div class="foot" id="d06-f">OPEN-SOURCE AI ACCELERATOR ON AN ULTRA96-V2 · MEMON ET AL., ARXIV 2609.05249 · UNDER REVIEW</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 93.5;
+          const DUR = 10.1;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          SQ.sceneFade(tl, "#d06", DUR);
+          SQ.scramble(tl, q("#d06-k"), 0.1, 0.8, 601);
+          SQ.titleIn(tl, q("#d06-t"), at("n15", 0));
+          SQ.rise(tl, "#d06-chips .d06-chip", at("n15", 1) - 0.1, { stagger: 0.75, y: 16 });
+          SQ.rise(tl, "#d06-inf", at("n15", 2));
+          SQ.rise(tl, ["#d06-n", "#d06-l"], at("n15", 4) - 0.15, { stagger: 0.15, y: 20 });
+          SQ.count(tl, q("#d06-n"), 0, 99.6, at("n15", 4), 1.6, (v) => v.toFixed(1) + "%", "power3.out");
+          SQ.rise(tl, "#d06-f", 0.6, { y: 0 });
+          tl.to("#d06-f", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d06-demo"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

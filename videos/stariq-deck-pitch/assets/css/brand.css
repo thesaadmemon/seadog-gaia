@@ -1,0 +1,119 @@
+/* STARIQ orbital pitch — shared brand layer.
+   Manrope is the brief's own brand face (embedded from the investor brief);
+   Orbitron carries the techno-space title moments; JetBrains Mono is HUD telemetry. */
+@font-face {
+  font-family: "Manrope";
+  src: url("../fonts/manrope-400.woff2") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("../fonts/manrope-700.woff2") format("woff2");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("../fonts/manrope-800.woff2") format("woff2");
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Orbitron";
+  src: url("../fonts/orbitron-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Orbitron";
+  src: url("../fonts/orbitron-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Orbitron";
+  src: url("../fonts/orbitron-latin-900-normal.woff2") format("woff2");
+  font-weight: 900;
+}
+
+:root {
+  --bg: #040a17;
+  --bg-2: #071431;
+  --ink: #eef4ff;
+  --muted: #a9bddc;
+  --dim: #6f86ab;
+  --brand: #1556e8;
+  --blue: #4a86ff;
+  --cyan: #5fd8ff;
+  --teal: #22c7ae;
+  --gold: #f3ac3d;
+  --red: #ff5d55;
+  --line: rgba(95, 160, 255, 0.42);
+  --panel: rgba(6, 16, 40, 0.72);
+}
+
+.kicker {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.kicker::before {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 3px;
+  background: var(--cyan);
+}
+.headline {
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  margin: 0;
+}
+.body {
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 30px;
+  line-height: 1.4;
+  margin: 0;
+}
+.mono {
+  font-family: "JetBrains Mono", monospace;
+}
+.orb {
+  font-family: "Orbitron", sans-serif;
+}
+.accent {
+  color: var(--blue);
+}
+.gold {
+  color: var(--gold);
+}
+.teal {
+  color: var(--teal);
+}
+.panel {
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 0 40px rgba(21, 86, 232, 0.18), inset 0 0 30px rgba(21, 86, 232, 0.08);
+}
+.word {
+  display: inline-block;
+}
+.srcnote {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+}
+.scene-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}

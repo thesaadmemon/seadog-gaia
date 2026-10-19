@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d12-top {
+          display: grid;
+          grid-template-columns: 460px 1fr;
+          gap: 30px;
+          margin-top: 18px;
+        }
+        .d12-amt {
+          background: #1556e8;
+          border-color: #6f9dff;
+          padding: 50px 46px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 14px;
+        }
+        .d12-amt .num {
+          font-size: 190px;
+        }
+        .d12-amt .s {
+          font-family: "Manrope", sans-serif;
+          font-weight: 700;
+          font-size: 32px;
+          color: #eaf1ff;
+        }
+        .d12-ms {
+          padding: 30px 36px;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          align-items: center;
+        }
+        .d12-m {
+          text-align: center;
+        }
+        .d12-m .mo {
+          display: inline-block;
+          padding: 6px 16px;
+          border-radius: 20px;
+          background: rgba(111, 157, 255, 0.16);
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 23px;
+          letter-spacing: 0.12em;
+          color: #8db2ff;
+        }
+        .d12-m .wh {
+          font-family: "Manrope", sans-serif;
+          font-weight: 800;
+          font-size: 36px;
+          color: #eef4ff;
+          margin-top: 14px;
+          white-space: nowrap;
+          line-height: 1.2;
+        }
+        .d12-m.last .mo {
+          background: #6f9dff;
+          color: #04091a;
+        }
+        .d12-model {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 30px;
+          margin-top: 40px;
+        }
+        .d12-p {
+          padding: 40px 44px;
+          display: flex;
+          align-items: baseline;
+          gap: 24px;
+        }
+        .d12-p .num {
+          font-size: 120px;
+        }
+        .d12-p .label {
+          font-size: 38px;
+          color: #eef4ff;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d12-ask" data-width="1920" data-height="1080">
+        <div class="slide" id="d12">
+          <div class="kicker" id="d12-k" data-text="THE ASK">THE ASK</div>
+          <h1 class="title" id="d12-t">€2M to a paid pilot, <span class="accent">a licence and a flight.</span></h1>
+          <div class="d12-top">
+            <div class="card d12-amt" id="d12-amt"><div class="num" id="d12-n">€0M</div><div class="s">Seed · 24 months</div></div>
+            <div class="card d12-ms" id="d12-ms">
+              <div class="d12-m" id="d12-m1"><div class="mo">MONTH 6</div><div class="wh">Paid pilot</div></div>
+              <div class="d12-m" id="d12-m2"><div class="mo">MONTH 12</div><div class="wh">Licence v1</div></div>
+              <div class="d12-m" id="d12-m3"><div class="mo">MONTH 18</div><div class="wh">Qualified</div></div>
+              <div class="d12-m last" id="d12-m4"><div class="mo">MONTH 24</div><div class="wh">Flight, Series A</div></div>
+            </div>
+          </div>
+          <div class="d12-model">
+            <div class="card d12-p" id="d12-p1"><div class="num blue">€150k</div><div class="label">paid pilot</div></div>
+            <div class="card d12-p" id="d12-p2"><div class="num gold">€15k</div><div class="label">licence per unit</div></div>
+          </div>
+        </div>
+        <div class="foot" id="d12-f">FIRST BUYERS TARGETED: EUROPEAN FLIGHT-COMPUTER PROGRAMMES · PLANNED MILESTONES</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 182.8;
+          const DUR = 19.9;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          SQ.sceneFade(tl, "#d12", DUR);
+          SQ.scramble(tl, q("#d12-k"), 0.05, 0.4, 1201);
+          SQ.titleIn(tl, q("#d12-t"), at("n23", 0) - 0.1);
+          SQ.rise(tl, "#d12-amt", at("n23", 0) + 0.4);
+          SQ.count(tl, q("#d12-n"), 0, 2, at("n23", 0) + 0.6, 1.2, (v) => "€" + Math.round(v) + "M", "power3.out");
+          SQ.rise(tl, "#d12-ms", at("n24", 0) - 0.3, { y: 20 });
+          [["#d12-m1", 0], ["#d12-m2", 1], ["#d12-m3", 2], ["#d12-m4", 3]].forEach(([m, k]) => SQ.rise(tl, m, at("n24", k) - 0.05, { y: 18 }));
+          SQ.rise(tl, "#d12-p1", at("n25", 0) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d12-p2", at("n25", 2) - 0.1, { y: 24 });
+          SQ.rise(tl, "#d12-f", at("n24", 0), { y: 0 });
+          tl.to("#d12-f", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d12-ask"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

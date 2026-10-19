@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <link rel="stylesheet" href="assets/css/brand.css" />
+      <link rel="stylesheet" href="assets/css/deck.css" />
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .d04-grid {
+          display: grid;
+          grid-template-columns: 700px 520px 1fr;
+          gap: 40px;
+          margin-top: 18px;
+          align-items: start;
+        }
+        .d04-photo {
+          position: relative;
+          width: 700px;
+          height: 520px;
+        }
+        .d04-ring {
+          position: absolute;
+          left: 228px;
+          top: 198px;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          border: 5px solid #ff6b62;
+          box-shadow: 0 0 30px rgba(255, 107, 98, 0.8);
+        }
+        .d04-inf {
+          width: 520px;
+          height: 520px;
+          position: relative;
+        }
+        .d04-inf img {
+          width: 520px;
+          height: 520px;
+          display: block;
+          border-radius: 10px;
+        }
+        .d04-cap {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 18px;
+          letter-spacing: 0.08em;
+          color: #8197ba;
+          margin-top: 10px;
+        }
+        .d04-side {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          padding-top: 20px;
+        }
+        .d04-side .num {
+          font-size: 150px;
+        }
+        .d04-side .label {
+          font-size: 34px;
+          color: #eef4ff;
+        }
+        .d04-quiet {
+          font-family: "Manrope", sans-serif;
+          font-size: 30px;
+          line-height: 1.35;
+          color: #b9c9e4;
+          font-style: italic;
+        }
+      </style>
+
+      <div id="root" data-composition-id="d04-reliability" data-width="1920" data-height="1080">
+        <div class="slide" id="d04">
+          <div class="kicker" id="d04-k" data-text="PROBLEM 2 · TECHNICAL RELIABILITY">PROBLEM 2 · TECHNICAL RELIABILITY</div>
+          <h1 class="title" id="d04-t">Commercial AI chips fail under radiation.</h1>
+          <div class="d04-grid">
+            <div>
+              <div class="photo d04-photo" id="d04-photo">
+                <img src="assets/img/beam-test.jpg" alt="AI chip in front of the proton beam nozzle" />
+                <div class="d04-ring" id="d04-ring"></div>
+              </div>
+              <div class="d04-cap">ONE AI CHIP · ONE PROTON BEAM · NO PROTECTION</div>
+            </div>
+            <div>
+              <div class="d04-inf" id="d04-inf"><img src="assets/img/grid-unprotected.png" alt="Inferences 1 to 100 under the beam" /></div>
+              <div class="d04-cap">INFERENCES 1–100 UNDER THE BEAM</div>
+            </div>
+            <div class="d04-side">
+              <div class="num red" id="d04-n">0</div>
+              <div class="label" id="d04-l">wrong answers in a row</div>
+              <div class="d04-quiet" id="d04-q">…while every health check said all was fine.</div>
+            </div>
+          </div>
+        </div>
+        <div class="foot" id="d04-f">IEEE TRANSACTIONS ON NUCLEAR SCIENCE (PP) · MEMON ET AL., ARXIV 2609.05249</div>
+      </div>
+
+      <script>
+        (function () {
+          const T0 = 49.6;
+          const DUR = 15.4;
+          const tl = gsap.timeline({ paused: true });
+          const at = SQ.local(T0);
+          const q = (s) => document.querySelector(s);
+
+          SQ.sceneFade(tl, "#d04", DUR);
+          SQ.scramble(tl, q("#d04-k"), at("n09", 0) - 0.3, 0.7, 401);
+          SQ.titleIn(tl, q("#d04-t"), at("n09", 1));
+          SQ.rise(tl, "#d04-photo", at("n10", 0) - 0.2);
+          tl.fromTo("#d04-photo img", { scale: 1.06 }, { scale: 1.0, duration: 10, ease: "none" }, at("n10", 0));
+          tl.fromTo("#d04-ring", { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, at("n10", 2));
+          tl.to("#d04-ring", { opacity: 0.35, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, at("n10", 2) + 0.6);
+          SQ.rise(tl, "#d04-inf", at("n10", 2) + 0.5);
+          SQ.rise(tl, ["#d04-n", "#d04-l"], at("n10", 3) - 0.1, { stagger: 0.12 });
+          SQ.count(tl, q("#d04-n"), 0, 39, at("n10", 3), 1.4, (v) => String(Math.round(v)), "power2.out");
+          SQ.rise(tl, "#d04-q", at("n10", 4), { y: 16 });
+          SQ.rise(tl, "#d04-f", at("n10", 0), { y: 0 });
+          tl.to("#d04-f", { opacity: 0, duration: 0.35 }, DUR - 0.35);
+
+          window.__timelines["d04-reliability"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
